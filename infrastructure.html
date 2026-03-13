@@ -10,21 +10,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared.css" />
   <style>
-    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
-    .page-hero .page-title {
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 700;
-      letter-spacing: -2px;
-      line-height: 1.05;
-      color: var(--text);
-      margin-bottom: 20px;
-    }
-    .page-hero .page-desc {
-      font-size: 18px;
-      color: var(--text-secondary);
-      max-width: 560px;
-      line-height: 1.7;
-    }
+    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); overflow: hidden; }
+    .page-hero-layout { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:48px; }
+    .page-hero .page-title { font-size:clamp(36px,5vw,60px); font-weight:700; letter-spacing:-2px; line-height:1.05; color:var(--text); margin-bottom:20px; }
+    .page-hero .page-desc { font-size:18px; color:var(--text-secondary); max-width:520px; line-height:1.7; }
+    .page-hero-visual { display:flex; align-items:center; justify-content:center; }
+    .hero-page-svg { width:100%; max-width:420px; height:auto; }
+    @keyframes orbit-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    @keyframes pin-pulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+    @keyframes globe-glow { 0%,100%{opacity:.08} 50%{opacity:.22} }
+    @keyframes shield-pulse { 0%,100%{opacity:.7} 50%{opacity:1} }
+    @keyframes packet-fade { 0%,100%{opacity:0} 30%,70%{opacity:1} }
+    .orbit-ring { animation:orbit-spin 14s linear infinite; transform-origin:220px 200px; }
+    .orbit-ring-2 { animation:orbit-spin 20s linear infinite reverse; transform-origin:220px 200px; }
+    .gpin1 { animation:pin-pulse 2.4s ease-in-out infinite; }
+    .gpin2 { animation:pin-pulse 2.4s .8s ease-in-out infinite; }
+    .gpin3 { animation:pin-pulse 2.4s 1.6s ease-in-out infinite; }
+    .gglw { animation:globe-glow 4s ease-in-out infinite; }
+    .gpkt { animation:packet-fade 4s ease-in-out infinite; }
+    .gpkt2 { animation:packet-fade 4s 2s ease-in-out infinite; }
+    .gshield { animation:shield-pulse 3s ease-in-out infinite; }
+    @media(prefers-reduced-motion:reduce){.orbit-ring,.orbit-ring-2,.gpin1,.gpin2,.gpin3,.gglw,.gpkt,.gpkt2,.gshield{animation:none}}
+    @media(max-width:768px){.page-hero-layout{grid-template-columns:1fr}.page-hero-visual{display:none}}
 
     /* DIAGRAM */
     .arch-section { padding: 80px 0 56px; }
@@ -211,9 +218,78 @@
   <!-- PAGE HERO -->
   <section class="page-hero" aria-labelledby="infra-heading">
     <div class="container">
-      <p class="section-label">Infrastructure</p>
-      <h1 class="page-title" id="infra-heading">How your data is<br>protected and verified</h1>
-      <p class="page-desc">Every security control we use is documented, tested, and explained in plain language. This page covers the full technical stack and what each element means for your data.</p>
+      <div class="page-hero-layout">
+        <div class="page-hero-text">
+          <p class="section-label">Infrastructure</p>
+          <h1 class="page-title" id="infra-heading">Three copies.<br>Two clouds.<br>Zero guesswork.</h1>
+          <p class="page-desc">Every security control we use is documented, tested, and explained in plain language. AES-256 encryption, 3-2-1 redundancy across AWS and Google Cloud, and weekly automated integrity checks on every account.</p>
+        </div>
+        <div class="page-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg" class="hero-page-svg">
+            <defs>
+              <radialGradient id="globe-bg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#4f9cf9" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/>
+              </radialGradient>
+              <clipPath id="globe-clip"><circle cx="220" cy="200" r="110"/></clipPath>
+            </defs>
+            <circle cx="220" cy="200" r="150" fill="url(#globe-bg)" class="gglw"/>
+            <circle cx="220" cy="200" r="110" fill="#08111f" stroke="#4f9cf9" stroke-width="1.2"/>
+            <g clip-path="url(#globe-clip)" stroke="#4f9cf9" stroke-width="0.6" fill="none" opacity="0.22">
+              <ellipse cx="220" cy="200" rx="110" ry="30"/>
+              <ellipse cx="220" cy="200" rx="110" ry="62"/>
+              <ellipse cx="220" cy="200" rx="110" ry="95"/>
+              <line x1="220" y1="90" x2="220" y2="310"/>
+              <line x1="165" y1="92" x2="165" y2="308"/>
+              <line x1="275" y1="92" x2="275" y2="308"/>
+              <line x1="120" y1="115" x2="120" y2="285"/>
+              <line x1="320" y1="115" x2="320" y2="285"/>
+            </g>
+            <!-- Orbital ring 1 -->
+            <g class="orbit-ring">
+              <ellipse cx="220" cy="200" rx="148" ry="50" fill="none" stroke="#4f9cf9" stroke-width="0.8" opacity="0.18" stroke-dasharray="4 6"/>
+              <circle cx="368" cy="200" r="4" fill="#4f9cf9" class="gpkt"/>
+            </g>
+            <!-- Orbital ring 2 -->
+            <g class="orbit-ring-2">
+              <ellipse cx="220" cy="200" rx="50" ry="148" fill="none" stroke="#4ade80" stroke-width="0.6" opacity="0.13" stroke-dasharray="3 8"/>
+              <circle cx="220" cy="52" r="3.5" fill="#4ade80" class="gpkt2"/>
+            </g>
+            <!-- US-EAST-1 pin -->
+            <g transform="translate(173,157)">
+              <circle cx="0" cy="0" r="5" fill="#4f9cf9" class="gpin1"/>
+              <circle cx="0" cy="0" r="10" fill="none" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" class="gpin1"/>
+              <line x1="0" y1="-5" x2="0" y2="-22" stroke="#4f9cf9" stroke-width="1" opacity="0.6"/>
+              <rect x="-24" y="-36" width="48" height="14" rx="3" fill="#0e1f38" stroke="#4f9cf9" stroke-width="0.7"/>
+              <text x="0" y="-26" font-size="8" font-family="monospace" fill="#4f9cf9" text-anchor="middle">US-EAST-1</text>
+            </g>
+            <!-- US-WEST-2 pin -->
+            <g transform="translate(252,232)">
+              <circle cx="0" cy="0" r="5" fill="#4f9cf9" class="gpin2"/>
+              <circle cx="0" cy="0" r="10" fill="none" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" class="gpin2"/>
+              <line x1="0" y1="-5" x2="0" y2="-22" stroke="#4f9cf9" stroke-width="1" opacity="0.6"/>
+              <rect x="-24" y="-36" width="48" height="14" rx="3" fill="#0e1f38" stroke="#4f9cf9" stroke-width="0.7"/>
+              <text x="0" y="-26" font-size="8" font-family="monospace" fill="#4f9cf9" text-anchor="middle">US-WEST-2</text>
+            </g>
+            <!-- GCP-US pin -->
+            <g transform="translate(212,177)">
+              <circle cx="0" cy="0" r="5" fill="#4ade80" class="gpin3"/>
+              <circle cx="0" cy="0" r="10" fill="none" stroke="#4ade80" stroke-width="0.8" opacity="0.3" class="gpin3"/>
+              <line x1="0" y1="5" x2="0" y2="22" stroke="#4ade80" stroke-width="1" opacity="0.6"/>
+              <rect x="-22" y="22" width="44" height="14" rx="3" fill="#0e1f38" stroke="#4ade80" stroke-width="0.7"/>
+              <text x="0" y="32" font-size="8" font-family="monospace" fill="#4ade80" text-anchor="middle">GCP-US</text>
+            </g>
+            <!-- Shield checkmark at center -->
+            <g transform="translate(220,198)" class="gshield">
+              <path d="M0 -18 L14 -9 L14 7 Q14 16 0 23 Q-14 16 -14 7 L-14 -9 Z" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.5"/>
+              <path d="M-5 3 L-1 8 L7 -5" fill="none" stroke="#4f9cf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <!-- Badge -->
+            <rect x="136" y="332" width="168" height="26" rx="13" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+            <text x="220" y="349" font-size="11" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600">3-2-1 REDUNDANCY</text>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 

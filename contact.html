@@ -113,7 +113,17 @@
     }
     select option { background: #1a1a1a; }
     textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
-    input::placeholder, textarea::placeholder { color: #555; }
+    @keyframes lock-pulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+    @keyframes shield-glow { 0%,100%{opacity:.1} 50%{opacity:.28} }
+    @keyframes env-draw { 0%{stroke-dashoffset:200} 100%{stroke-dashoffset:0} }
+    @keyframes stream-dot { 0%{opacity:0;transform:translateY(40px)} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0;transform:translateY(0px)} }
+    .shield-glow-el { animation:shield-glow 3s ease-in-out infinite; }
+    .lk { animation:lock-pulse 2.5s ease-in-out infinite; }
+    .env-path { stroke-dasharray:200; animation:env-draw 1.8s 0.5s ease-out forwards; }
+    .sd1 { animation:stream-dot 2.4s .3s ease-in-out infinite; }
+    .sd2 { animation:stream-dot 2.4s .9s ease-in-out infinite; }
+    .sd3 { animation:stream-dot 2.4s 1.5s ease-in-out infinite; }
+    @media(prefers-reduced-motion:reduce){.shield-glow-el,.lk,.env-path,.sd1,.sd2,.sd3{animation:none;stroke-dashoffset:0}}
 
     /* Honeypot */
     .hp-field { position: absolute; left: -9999px; height: 0; overflow: hidden; }
@@ -194,8 +204,44 @@
 
         <div class="contact-info">
           <p class="section-label">Contact</p>
-          <h1>Talk to us about your data</h1>
+          <h1 class="contact-info-h">Talk to us about your data</h1>
           <p>Describe your storage volume, use case, and any compliance requirements. We return quotes within one business day and provision accounts only after a signed custody agreement is in place.</p>
+
+          <!-- Secure channel SVG -->
+          <div aria-hidden="true" style="margin:32px 0;">
+            <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;height:auto;">
+              <defs>
+                <radialGradient id="sh-bg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#4f9cf9" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <!-- Glow -->
+              <ellipse cx="160" cy="130" rx="120" ry="110" fill="url(#sh-bg)" class="shield-glow-el"/>
+              <!-- Shield -->
+              <path d="M160 20 L240 60 L240 140 Q240 200 160 230 Q80 200 80 140 L80 60 Z" fill="#08111f" stroke="#4f9cf9" stroke-width="1.8"/>
+              <!-- Inner shield ring -->
+              <path d="M160 38 L222 70 L222 138 Q222 186 160 210 Q98 186 98 138 L98 70 Z" fill="none" stroke="#4f9cf9" stroke-width="0.6" opacity="0.3"/>
+              <!-- Envelope shape (inside shield) -->
+              <rect x="120" y="100" width="80" height="56" rx="4" fill="none" stroke="#4f9cf9" stroke-width="1.4" class="env-path" stroke-dashoffset="200"/>
+              <path d="M120 100 L160 130 L200 100" fill="none" stroke="#4f9cf9" stroke-width="1.4" class="env-path" stroke-dashoffset="200"/>
+              <!-- Lock (above envelope) -->
+              <g class="lk">
+                <rect x="150" y="75" width="20" height="16" rx="3" fill="#4f9cf9" opacity="0.85"/>
+                <circle cx="160" cy="81" r="3" fill="#08111f"/>
+                <path d="M154 75 L154 69 Q160 63 166 69 L166 75" fill="none" stroke="#4f9cf9" stroke-width="1.8" stroke-linecap="round"/>
+              </g>
+              <!-- Incoming data stream dots -->
+              <circle cx="55" cy="170" r="3" fill="#4f9cf9" class="sd1"/>
+              <circle cx="55" cy="150" r="3" fill="#4f9cf9" class="sd2"/>
+              <circle cx="55" cy="130" r="3" fill="#4ade80" class="sd3"/>
+              <line x1="55" y1="80" x2="55" y2="210" stroke="#4f9cf9" stroke-width="0.6" opacity="0.15"/>
+              <!-- Badge -->
+              <rect x="88" y="240" width="144" height="18" rx="9" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+              <text x="160" y="253" font-size="9" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600">SECURE INQUIRY</text>
+            </svg>
+          </div>
+
           <div class="contact-items">
             <div class="contact-item">
               <div class="contact-item-icon" aria-hidden="true">&#9201;</div>

@@ -11,8 +11,13 @@
   <link rel="stylesheet" href="shared.css" />
   <style>
     /* PAGE-SPECIFIC */
-    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
-    .page-hero .section-label { margin-bottom: 16px; }
+    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); overflow: hidden; position: relative; }
+    .page-hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
     .page-hero .page-title {
       font-size: clamp(36px, 5vw, 60px);
       font-weight: 700;
@@ -24,9 +29,32 @@
     .page-hero .page-desc {
       font-size: 18px;
       color: var(--text-secondary);
-      max-width: 560px;
+      max-width: 520px;
       line-height: 1.7;
     }
+    .page-hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-page-svg { width: 100%; max-width: 420px; height: auto; }
+
+    /* Tier SVG animations */
+    @keyframes tier-glow { 0%,100%{opacity:.15} 50%{opacity:.35} }
+    @keyframes tier-node { 0%,100%{opacity:.5;r:4} 50%{opacity:1;r:5.5} }
+    @keyframes tier-packet { 0%{opacity:0;transform:translateY(0)} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0;transform:translateY(-80px)} }
+    @keyframes tier-scan { 0%{opacity:0;transform:translateX(-60px)} 30%{opacity:.6} 70%{opacity:.6} 100%{opacity:0;transform:translateX(60px)} }
+    .ta { animation: tier-glow 3.5s ease-in-out infinite; }
+    .tb { animation: tier-glow 3.5s 1.2s ease-in-out infinite; }
+    .tc { animation: tier-glow 3.5s 2.4s ease-in-out infinite; }
+    .tn1 { animation: tier-node 2.2s ease-in-out infinite; }
+    .tn2 { animation: tier-node 2.2s .7s ease-in-out infinite; }
+    .tn3 { animation: tier-node 2.2s 1.4s ease-in-out infinite; }
+    .tp1 { animation: tier-packet 3s .5s ease-in-out infinite; }
+    .tp2 { animation: tier-packet 3s 1.5s ease-in-out infinite; }
+    .tp3 { animation: tier-packet 3s 2.5s ease-in-out infinite; }
+    @media(prefers-reduced-motion:reduce){.ta,.tb,.tc,.tn1,.tn2,.tn3,.tp1,.tp2,.tp3{animation:none}}
+    @media(max-width:768px){.page-hero-layout{grid-template-columns:1fr}.page-hero-visual{display:none}}
 
     /* AUDIENCE TABS */
     .audience-section { padding: 72px 0; }
@@ -312,9 +340,83 @@
   <!-- PAGE HERO -->
   <section class="page-hero" aria-labelledby="services-page-heading">
     <div class="container">
-      <p class="section-label">Services</p>
-      <h1 class="page-title" id="services-page-heading">Plans built around how<br>your data actually lives</h1>
-      <p class="page-desc">Every Stoneline plan includes AES-256 encryption, three independent copies of your data across two cloud providers, and a plain-language monthly confirmation that your backup is intact.</p>
+      <div class="page-hero-layout">
+        <div class="page-hero-text">
+          <p class="section-label">Services</p>
+          <h1 class="page-title" id="services-page-heading">Plans built around how<br>your data actually lives</h1>
+          <p class="page-desc">Every Stoneline plan includes AES-256 encryption, three independent copies of your data across two cloud providers, and a plain-language monthly confirmation that your backup is intact.</p>
+        </div>
+        <div class="page-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg" class="hero-page-svg">
+            <defs>
+              <radialGradient id="sg-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#4f9cf9" stop-opacity="0.12"/>
+                <stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- background glow -->
+            <ellipse cx="220" cy="200" rx="180" ry="160" fill="url(#sg-glow)"/>
+
+            <!-- Tier 3 — top (HIPAA/Professional) -->
+            <g transform="translate(0,60)">
+              <rect x="100" y="0" width="240" height="54" rx="8" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1" class="ta"/>
+              <rect x="100" y="0" width="240" height="54" rx="8" fill="none" stroke="#4f9cf9" stroke-width="1" opacity="0.8"/>
+              <text x="124" y="22" font-size="10" font-family="monospace" fill="#4f9cf9" opacity="0.5">TIER 3</text>
+              <text x="124" y="38" font-size="12" font-family="sans-serif" fill="#e0e0e0" font-weight="600">HIPAA &amp; Compliance</text>
+              <!-- nodes -->
+              <circle cx="298" cy="27" r="4" fill="#4f9cf9" class="tn1"/>
+              <circle cx="314" cy="27" r="4" fill="#4f9cf9" class="tn2"/>
+              <circle cx="330" cy="27" r="4" fill="#4ade80" class="tn3"/>
+              <!-- lock icon -->
+              <rect x="306" y="38" width="10" height="8" rx="1.5" fill="#4f9cf9" opacity="0.7"/>
+              <path d="M308 38 L308 35 Q311 32 314 35 L314 38" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.7"/>
+            </g>
+
+            <!-- connector lines tier3→tier2 -->
+            <line x1="180" y1="114" x2="180" y2="150" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+            <line x1="260" y1="114" x2="260" y2="150" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+
+            <!-- Tier 2 — mid (Small Business) -->
+            <g transform="translate(0,158)">
+              <rect x="80" y="0" width="280" height="54" rx="8" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1" class="tb"/>
+              <rect x="80" y="0" width="280" height="54" rx="8" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.9"/>
+              <text x="104" y="22" font-size="10" font-family="monospace" fill="#4f9cf9" opacity="0.5">TIER 2</text>
+              <text x="104" y="38" font-size="12" font-family="sans-serif" fill="#e0e0e0" font-weight="600">Small Business</text>
+              <circle cx="294" cy="20" r="4" fill="#4f9cf9" class="tn2"/>
+              <circle cx="310" cy="20" r="4" fill="#4f9cf9" class="tn1"/>
+              <circle cx="326" cy="20" r="4" fill="#4f9cf9" class="tn3"/>
+              <circle cx="342" cy="20" r="4" fill="#4ade80" class="tn2"/>
+              <rect x="302" y="33" width="10" height="8" rx="1.5" fill="#4f9cf9" opacity="0.7"/>
+              <path d="M304 33 L304 30 Q307 27 310 30 L310 33" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.7"/>
+            </g>
+
+            <!-- connector lines tier2→tier1 -->
+            <line x1="180" y1="212" x2="180" y2="248" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+            <line x1="260" y1="212" x2="260" y2="248" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+
+            <!-- Tier 1 — base (Personal) -->
+            <g transform="translate(0,256)">
+              <rect x="60" y="0" width="320" height="54" rx="8" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1" class="tc"/>
+              <rect x="60" y="0" width="320" height="54" rx="8" fill="none" stroke="#4f9cf9" stroke-width="0.8" opacity="0.6"/>
+              <text x="84" y="22" font-size="10" font-family="monospace" fill="#4f9cf9" opacity="0.5">TIER 1</text>
+              <text x="84" y="38" font-size="12" font-family="sans-serif" fill="#e0e0e0" font-weight="600">Personal Archive</text>
+              <circle cx="298" cy="20" r="4" fill="#4f9cf9" class="tn3"/>
+              <circle cx="314" cy="20" r="4" fill="#4f9cf9" class="tn1"/>
+              <rect x="306" y="33" width="10" height="8" rx="1.5" fill="#4f9cf9" opacity="0.5"/>
+              <path d="M308 33 L308 30 Q311 27 314 30 L314 33" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.5"/>
+            </g>
+
+            <!-- Animated ascending data packets -->
+            <circle cx="180" cy="310" r="3" fill="#4f9cf9" class="tp1"/>
+            <circle cx="260" cy="310" r="3" fill="#4ade80" class="tp2"/>
+            <circle cx="220" cy="310" r="3" fill="#4f9cf9" class="tp3"/>
+
+            <!-- AES label badge -->
+            <rect x="154" y="348" width="132" height="26" rx="13" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+            <text x="220" y="365" font-size="11" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600">AES-256 ENCRYPTED</text>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 

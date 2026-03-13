@@ -10,7 +10,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared.css" />
   <style>
-    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
+    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); overflow: hidden; position: relative; }
+    .page-hero-layout { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:48px; }
+    .page-hero .page-title { font-size:clamp(36px,5vw,60px); font-weight:700; letter-spacing:-2px; line-height:1.05; color:var(--text); margin-bottom:20px; }
+    .page-hero .page-desc { font-size:18px; color:var(--text-secondary); max-width:520px; line-height:1.7; }
+    .page-hero-visual { display:flex; align-items:center; justify-content:center; }
+    .hero-page-svg { width:100%; max-width:420px; height:auto; }
+    @keyframes node-pulse { 0%,100%{opacity:.55;r:22} 50%{opacity:1;r:24} }
+    @keyframes line-pulse { 0%,100%{opacity:.15} 50%{opacity:.5} }
+    @keyframes client-pulse { 0%,100%{opacity:.5;r:14} 50%{opacity:1;r:16} }
+    @keyframes ring-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    @keyframes dot-travel { 0%{opacity:0;r:3.5} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0;r:4.5} }
+    .hub { animation:node-pulse 3s ease-in-out infinite; transform-origin:220px 200px; }
+    .lp1{animation:line-pulse 2.5s ease-in-out infinite}
+    .lp2{animation:line-pulse 2.5s .4s ease-in-out infinite}
+    .lp3{animation:line-pulse 2.5s .8s ease-in-out infinite}
+    .lp4{animation:line-pulse 2.5s 1.2s ease-in-out infinite}
+    .lp5{animation:line-pulse 2.5s 1.6s ease-in-out infinite}
+    .lp6{animation:line-pulse 2.5s 2s ease-in-out infinite}
+    .cn1{animation:client-pulse 2.5s ease-in-out infinite}
+    .cn2{animation:client-pulse 2.5s .4s ease-in-out infinite}
+    .cn3{animation:client-pulse 2.5s .8s ease-in-out infinite}
+    .cn4{animation:client-pulse 2.5s 1.2s ease-in-out infinite}
+    .cn5{animation:client-pulse 2.5s 1.6s ease-in-out infinite}
+    .cn6{animation:client-pulse 2.5s 2s ease-in-out infinite}
+    .hub-ring { animation:ring-spin 18s linear infinite; transform-origin:220px 200px; }
+    @media(prefers-reduced-motion:reduce){.hub,.lp1,.lp2,.lp3,.lp4,.lp5,.lp6,.cn1,.cn2,.cn3,.cn4,.cn5,.cn6,.hub-ring{animation:none}}
+    @media(max-width:768px){.page-hero-layout{grid-template-columns:1fr}.page-hero-visual{display:none}}
     .page-hero .page-title {
       font-size: clamp(36px, 5vw, 60px);
       font-weight: 700;
@@ -191,9 +217,72 @@
 
   <section class="page-hero" aria-labelledby="about-heading">
     <div class="container">
-      <p class="section-label">About</p>
-      <h1 class="page-title" id="about-heading">Operator-managed.<br>Accountable by design.</h1>
-      <p class="page-desc">Stoneline Data is a managed data custody service built on the principle that storage without accountability is just disk space. We pair enterprise-grade cloud infrastructure with named, documented human oversight.</p>
+      <div class="page-hero-layout">
+        <div class="page-hero-text">
+          <p class="section-label">About</p>
+          <h1 class="page-title" id="about-heading">Operator-managed.<br>Accountable by design.</h1>
+          <p class="page-desc">Stoneline Data is a managed data custody service built on the principle that storage without accountability is just disk space. We pair enterprise-grade cloud infrastructure with named, documented human oversight.</p>
+        </div>
+        <div class="page-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg" class="hero-page-svg">
+            <defs>
+              <radialGradient id="net-bg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#4f9cf9" stop-opacity="0.12"/>
+                <stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="220" cy="200" rx="170" ry="160" fill="url(#net-bg)"/>
+
+            <!-- Connection lines -->
+            <line x1="220" y1="200" x2="220" y2="80" stroke="#4f9cf9" stroke-width="1" class="lp1"/>
+            <line x1="220" y1="200" x2="324" y2="145" stroke="#4f9cf9" stroke-width="1" class="lp2"/>
+            <line x1="220" y1="200" x2="324" y2="255" stroke="#4f9cf9" stroke-width="1" class="lp3"/>
+            <line x1="220" y1="200" x2="220" y2="320" stroke="#4f9cf9" stroke-width="1" class="lp4"/>
+            <line x1="220" y1="200" x2="116" y2="255" stroke="#4f9cf9" stroke-width="1" class="lp5"/>
+            <line x1="220" y1="200" x2="116" y2="145" stroke="#4f9cf9" stroke-width="1" class="lp6"/>
+
+            <!-- Client nodes -->
+            <!-- Top -->
+            <circle cx="220" cy="80" r="14" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.2" class="cn1"/>
+            <text x="220" y="76" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">MED</text>
+            <text x="220" y="86" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">OFFICE</text>
+            <!-- Top-right -->
+            <circle cx="324" cy="145" r="14" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.2" class="cn2"/>
+            <text x="324" y="141" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">LAW</text>
+            <text x="324" y="151" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">FIRM</text>
+            <!-- Bottom-right -->
+            <circle cx="324" cy="255" r="14" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.2" class="cn3"/>
+            <text x="324" y="251" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">FILM</text>
+            <text x="324" y="261" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">MAKER</text>
+            <!-- Bottom -->
+            <circle cx="220" cy="320" r="14" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.2" class="cn4"/>
+            <text x="220" y="316" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">DATA</text>
+            <text x="220" y="326" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">VAULT</text>
+            <!-- Bottom-left -->
+            <circle cx="116" cy="255" r="14" fill="#0e1f38" stroke="#4ade80" stroke-width="1.2" class="cn5"/>
+            <text x="116" y="251" font-size="7" font-family="monospace" fill="#4ade80" text-anchor="middle">PHOTO</text>
+            <text x="116" y="261" font-size="7" font-family="monospace" fill="#4ade80" text-anchor="middle">GRAPHER</text>
+            <!-- Top-left -->
+            <circle cx="116" cy="145" r="14" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.2" class="cn6"/>
+            <text x="116" y="141" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">CORP</text>
+            <text x="116" y="151" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle">BACKUP</text>
+
+            <!-- Hub outer spinning ring -->
+            <g class="hub-ring">
+              <circle cx="220" cy="200" r="35" fill="none" stroke="#4f9cf9" stroke-width="0.8" stroke-dasharray="3 5" opacity="0.3"/>
+            </g>
+
+            <!-- Central operator hub -->
+            <circle cx="220" cy="200" r="22" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.5" class="hub"/>
+            <text x="220" y="196" font-size="8" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="700">OP</text>
+            <text x="220" y="207" font-size="7" font-family="sans-serif" fill="#4f9cf9" text-anchor="middle" opacity="0.8">NAMED</text>
+
+            <!-- Badge -->
+            <rect x="130" y="358" width="180" height="24" rx="12" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+            <text x="220" y="374" font-size="11" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600">ACCOUNTABLE BY DESIGN</text>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
