@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact &amp; Get a Quote — Stoneline Data</title>
+  <meta name="description" content="Request a data custody quote from Stoneline Data. Describe your storage volume, use case, and compliance needs and we will respond within 24 hours." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .contact-layout { padding: 80px 0 100px; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 72px;
+      align-items: flex-start;
+    }
+
+    /* SIDEBAR */
+    .contact-info { position: sticky; top: 82px; }
+    .contact-info h1 {
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      color: var(--text);
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .contact-info p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .contact-items { display: flex; flex-direction: column; gap: 20px; }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .contact-item-icon {
+      width: 38px; height: 38px;
+      flex-shrink: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .contact-item-text { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+    .contact-item-text strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 14px; }
+
+    /* FORM */
+    .contact-form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+    }
+    .form-row { margin-bottom: 24px; }
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    label .req {
+      color: var(--accent-blue);
+      margin-left: 2px;
+    }
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: var(--font-sans);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(79, 156, 249, 0.15);
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8b8b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    select option { background: #1a1a1a; }
+    textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+    input::placeholder, textarea::placeholder { color: #555; }
+
+    /* Honeypot */
+    .hp-field { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+
+    .form-consent {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .form-consent a { color: var(--accent-blue); text-decoration: underline; text-underline-offset: 3px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      background: var(--text);
+      border: 1px solid var(--text);
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: var(--font-sans);
+    }
+    .form-submit:hover { background: #d0d0d0; border-color: #d0d0d0; }
+    .form-submit:focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 3px;
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .contact-info { position: static; }
+      .contact-form-wrap { padding: 32px 24px; }
+    }
+    @media (max-width: 640px) {
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo" aria-label="Stoneline Data home">
+      <div class="nav-logo-mark" aria-hidden="true">S</div>
+      <span class="nav-logo-text">Stoneline Data</span>
+    </a>
+    <div class="nav-sep" aria-hidden="true"></div>
+    <ul class="nav-links" role="list">
+      <li><a href="/services.html">Services</a></li>
+      <li><a href="/infrastructure.html">Infrastructure</a></li>
+      <li><a href="/compliance.html">Compliance</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html" aria-current="page">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/client-portal" class="btn-outline">Client Portal</a>
+      <a href="/contact.html" class="btn-solid">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page" id="main-content">
+  <div class="contact-layout">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <p class="section-label">Contact</p>
+          <h1>Talk to us about your data</h1>
+          <p>Describe your storage volume, use case, and any compliance requirements. We return quotes within one business day and provision accounts only after a signed custody agreement is in place.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">&#9201;</div>
+              <div class="contact-item-text">
+                <strong>Response time</strong>
+                Quote returned within one business day. HIPAA and compliance inquiries receive a priority response.
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">&#128274;</div>
+              <div class="contact-item-text">
+                <strong>Your inquiry stays private</strong>
+                Information you share in this form is used only to respond to your request and is not shared with third parties.
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">&#128203;</div>
+              <div class="contact-item-text">
+                <strong>Documentation before you commit</strong>
+                You receive a draft custody agreement and, where applicable, a BAA before any account is provisioned or payment is collected.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap">
+          <form
+            id="quote-form"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+            novalidate
+            aria-label="Quote request form"
+          >
+            <!-- Honeypot spam prevention -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="hp-name">Leave this field blank</label>
+              <input type="text" id="hp-name" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form-row-2">
+              <div>
+                <label for="first-name">First name <span class="req" aria-label="required">*</span></label>
+                <input type="text" id="first-name" name="first_name" required autocomplete="given-name" />
+              </div>
+              <div>
+                <label for="last-name">Last name <span class="req" aria-label="required">*</span></label>
+                <input type="text" id="last-name" name="last_name" required autocomplete="family-name" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email address <span class="req" aria-label="required">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" />
+            </div>
+
+            <div class="form-row">
+              <label for="organization">Organization or business name</label>
+              <input type="text" id="organization" name="organization" autocomplete="organization" />
+            </div>
+
+            <div class="form-row-2">
+              <div>
+                <label for="use-case">Use case <span class="req" aria-label="required">*</span></label>
+                <select id="use-case" name="use_case" required>
+                  <option value="" disabled selected>Select your situation</option>
+                  <option value="hipaa">HIPAA-compliant custody (medical)</option>
+                  <option value="legal">Legal or regulatory records</option>
+                  <option value="business">Small business backup</option>
+                  <option value="personal">Personal data lockbox</option>
+                  <option value="creator">Creator or creative archive</option>
+                  <option value="other">Other / not sure yet</option>
+                </select>
+              </div>
+              <div>
+                <label for="data-volume">Estimated data volume</label>
+                <select id="data-volume" name="data_volume">
+                  <option value="" disabled selected>Select a range</option>
+                  <option value="under-500gb">Under 500GB</option>
+                  <option value="500gb-2tb">500GB to 2TB</option>
+                  <option value="2tb-5tb">2TB to 5TB</option>
+                  <option value="5tb-10tb">5TB to 10TB</option>
+                  <option value="over-10tb">Over 10TB</option>
+                  <option value="unsure">Not sure yet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="message">Tell us about your data and any specific requirements</label>
+              <textarea id="message" name="message" placeholder="Describe what you need backed up, any compliance requirements, and any questions you have about the service."></textarea>
+            </div>
+
+            <p class="form-consent">
+              By submitting this form you agree to our <a href="/privacy.html">Privacy Policy</a>. We store your contact information only to respond to your inquiry and will never sell or share it with third parties.
+            </p>
+
+            <button type="submit" class="form-submit">Send inquiry &#8594;</button>
+            <p class="form-note">We respond within one business day. No commitment required.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/index.html" class="footer-logo" aria-label="Stoneline Data home">
+        <div class="footer-logo-mark" aria-hidden="true">S</div>
+        Stoneline Data
+      </a>
+      <ul class="footer-links" role="list">
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/infrastructure.html">Infrastructure</a></li>
+        <li><a href="/compliance.html">Compliance</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/client-portal">Client Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-legal">
+      <ul class="footer-legal-links" role="list">
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms of Service</a></li>
+        <li><a href="/acceptable-use.html">Acceptable Use</a></li>
+        <li><a href="/data-processing.html">Data Processing Agreement</a></li>
+      </ul>
+      <span class="footer-copy">&#169; 2026 Stoneline Data LLC &nbsp;|&nbsp; <a href="https://custodyagency.com" rel="noopener noreferrer" class="footer-attr-link">Compliant Web Design</a> by Custody &amp; Agency</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

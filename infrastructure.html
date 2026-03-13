@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infrastructure &amp; Security — Stoneline Data</title>
+  <meta name="description" content="How Stoneline Data protects your data: AES-256 encryption, 3-2-1 redundancy across AWS and Google Cloud, access logging, MFA enforcement, and automated integrity checks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
+    .page-hero .page-title {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .page-hero .page-desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* DIAGRAM */
+    .arch-section { padding: 80px 0 56px; }
+    .arch-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      margin: 48px 0 24px;
+    }
+    .arch-node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .arch-node.primary { border-color: var(--accent-blue); background: var(--accent-blue-bg); }
+    .arch-node-icon { font-size: 28px; margin-bottom: 10px; }
+    .arch-node-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .arch-node-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .arch-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--accent-blue);
+      text-align: center;
+    }
+    .arch-arrow-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), var(--accent-blue), var(--border));
+      margin: 4px 0;
+    }
+    .arch-caption {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      font-family: var(--font-mono);
+      margin-bottom: 64px;
+    }
+
+    /* SECURITY GLOSSARY */
+    .security-section { padding: 0 0 88px; }
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .glossary-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .glossary-item:hover { background: var(--surface-2); border-color: var(--border-light); }
+    .glossary-term {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .glossary-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin-bottom: 12px;
+    }
+    .glossary-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+    .glossary-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid #1a4a2a;
+    }
+
+    /* STACK BREAKDOWN */
+    .stack-section { padding: 0 0 88px; }
+    .stack-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 40px;
+    }
+    .stack-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 28px 28px;
+      transition: background 0.15s;
+    }
+    .stack-step:first-child { border-radius: 12px 12px 0 0; }
+    .stack-step:last-child { border-radius: 0 0 12px 12px; }
+    .stack-step:hover { background: var(--surface-2); }
+    .stack-num {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      opacity: 0.5;
+      line-height: 1;
+      padding-top: 4px;
+    }
+    .stack-step-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.4px;
+      margin-bottom: 8px;
+    }
+    .stack-step-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 768px) {
+      .glossary-grid { grid-template-columns: 1fr; }
+      .arch-diagram { grid-template-columns: 1fr; }
+      .arch-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo" aria-label="Stoneline Data home">
+      <div class="nav-logo-mark" aria-hidden="true">S</div>
+      <span class="nav-logo-text">Stoneline Data</span>
+    </a>
+    <div class="nav-sep" aria-hidden="true"></div>
+    <ul class="nav-links" role="list">
+      <li><a href="/services.html">Services</a></li>
+      <li><a href="/infrastructure.html" aria-current="page">Infrastructure</a></li>
+      <li><a href="/compliance.html">Compliance</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/client-portal" class="btn-outline">Client Portal</a>
+      <a href="/contact.html" class="btn-solid">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page" id="main-content">
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" aria-labelledby="infra-heading">
+    <div class="container">
+      <p class="section-label">Infrastructure</p>
+      <h1 class="page-title" id="infra-heading">How your data is<br>protected and verified</h1>
+      <p class="page-desc">Every security control we use is documented, tested, and explained in plain language. This page covers the full technical stack and what each element means for your data.</p>
+    </div>
+  </section>
+
+  <!-- 3-2-1 ARCHITECTURE DIAGRAM -->
+  <section class="arch-section" aria-labelledby="arch-heading">
+    <div class="container">
+      <p class="section-label">3-2-1 Redundancy</p>
+      <h2 class="section-title" id="arch-heading">Three copies. Two providers. One local.</h2>
+      <p class="section-desc">The 3-2-1 backup rule is an industry-standard architecture endorsed by NIST and used by enterprise storage operations worldwide. We implement it for every client regardless of tier.</p>
+
+      <div class="arch-diagram" role="img" aria-label="3-2-1 redundancy architecture: local NAS copy syncs to AWS S3 primary and GCP Cloud Storage secondary">
+        <div class="arch-node">
+          <div class="arch-node-icon" aria-hidden="true">&#128421;</div>
+          <div class="arch-node-name">Local NAS</div>
+          <div class="arch-node-sub">Copy 1 of 3</div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">
+          <div>Rclone sync</div>
+          <div class="arch-arrow-line"></div>
+          <div>nightly</div>
+        </div>
+        <div>
+          <div class="arch-node primary" style="margin-bottom:16px;">
+            <div class="arch-node-icon" aria-hidden="true">&#9729;</div>
+            <div class="arch-node-name">AWS S3</div>
+            <div class="arch-node-sub">Copy 2 of 3 &mdash; Primary</div>
+          </div>
+          <div class="arch-node">
+            <div class="arch-node-icon" aria-hidden="true">&#9729;</div>
+            <div class="arch-node-name">Google Cloud Storage</div>
+            <div class="arch-node-sub">Copy 3 of 3 &mdash; Secondary</div>
+          </div>
+        </div>
+      </div>
+      <p class="arch-caption">Local copy syncs nightly to both cloud providers via encrypted Rclone. AWS replicates to a second region automatically.</p>
+    </div>
+  </section>
+
+  <!-- SECURITY GLOSSARY -->
+  <section class="security-section" aria-labelledby="glossary-heading">
+    <div class="container">
+      <p class="section-label">Security Concepts</p>
+      <h2 class="section-title" id="glossary-heading">What every security term actually means</h2>
+      <p class="section-desc">We use industry-standard terminology because it is precise and auditable. Here is exactly what each term means for your data.</p>
+
+      <div class="glossary-grid">
+
+        <div class="glossary-item">
+          <div class="glossary-term">AES-256</div>
+          <div class="glossary-name">Encryption at Rest</div>
+          <p class="glossary-desc">AES-256 (Advanced Encryption Standard with a 256-bit key) is the same encryption standard used by the U.S. federal government for classified information. When your data is stored on disk in any of our cloud buckets, it is transformed into ciphertext that is unreadable without the encryption key. Only authorized processes and personnel can access the plaintext.</p>
+          <span class="glossary-tag">Applied to all tiers</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">TLS 1.2 / 1.3</div>
+          <div class="glossary-name">Encryption in Transit</div>
+          <p class="glossary-desc">Transport Layer Security ensures that data moving between your systems and our cloud storage cannot be intercepted or read in transit. All connections to AWS S3 and Google Cloud Storage are enforced over TLS. Any connection attempt over an unencrypted channel is rejected at the network layer.</p>
+          <span class="glossary-tag">Enforced at network layer</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">SSE-S3 / SSE-KMS</div>
+          <div class="glossary-name">Server-Side Encryption</div>
+          <p class="glossary-desc">AWS offers two models of server-side encryption. SSE-S3 uses AWS-managed keys and is applied by default. SSE-KMS uses AWS Key Management Service with customer-managed keys, giving you explicit control over key rotation and access policy. HIPAA-tier clients receive SSE-KMS so all key usage is logged and auditable.</p>
+          <span class="glossary-tag">HIPAA tier uses KMS</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">S3 Versioning</div>
+          <div class="glossary-name">Version Retention</div>
+          <p class="glossary-desc">AWS S3 versioning preserves every version of every object in your bucket. If a file is modified, overwritten, or accidentally deleted, the previous version remains intact and retrievable. This protects against ransomware that attempts to overwrite files and against accidental deletion by any party.</p>
+          <span class="glossary-tag">Enabled on all primary buckets</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">IAM</div>
+          <div class="glossary-name">Identity and Access Management</div>
+          <p class="glossary-desc">AWS Identity and Access Management controls who can access what within your storage account. Each client receives a dedicated IAM user scoped exclusively to their bucket with no cross-account permissions possible. Policies define the minimum necessary access required for operations, and multi-factor authentication is required for all privileged actions.</p>
+          <span class="glossary-tag">Scoped per client</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">MFA</div>
+          <div class="glossary-name">Multi-Factor Authentication</div>
+          <p class="glossary-desc">Multi-factor authentication requires a second form of verification beyond a password before access is granted. We enforce MFA on every IAM user associated with your account. Even if a password were compromised, access to your storage buckets would remain protected by the second factor.</p>
+          <span class="glossary-tag">Required on every account</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Access Logs</div>
+          <div class="glossary-name">S3 Access Logging</div>
+          <p class="glossary-desc">AWS S3 access logging records every request made to your bucket: who accessed it, when, from which IP address, and what action was taken. These logs are written to a separate isolated bucket and are retained as part of your audit trail. They are available for compliance reviews, dispute resolution, or security investigations.</p>
+          <span class="glossary-tag">Business and above</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Rclone Crypt</div>
+          <div class="glossary-name">Client-Side Encryption</div>
+          <p class="glossary-desc">Rclone crypt wraps any cloud storage remote with an additional encryption layer applied before data leaves your local environment. Files are encrypted on the operator machine before upload, meaning neither AWS nor Google Cloud ever sees plaintext data. The encryption key never leaves the Stoneline environment and is stored in a hardware-secured password vault.</p>
+          <span class="glossary-tag">Available on all tiers</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">CloudWatch</div>
+          <div class="glossary-name">Anomaly Monitoring</div>
+          <p class="glossary-desc">AWS CloudWatch monitors your storage buckets for unusual activity patterns: unexpected large deletions, access from unfamiliar IP ranges, or volume spikes that deviate from your baseline. Alerts are configured to notify the Stoneline operator immediately, enabling rapid investigation and response before an incident affects your data.</p>
+          <span class="glossary-tag">Small Business and above</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Rclone Check</div>
+          <div class="glossary-name">Integrity Verification</div>
+          <p class="glossary-desc">Integrity verification compares the cryptographic checksums of files in your local copy against the checksums of your cloud copies. If any file has been silently corrupted, truncated, or altered in transit, the mismatch is detected. We run weekly checks on active plans and quarterly checks on cold archives, and report results in your monthly verification document.</p>
+          <span class="glossary-tag">All tiers, automated</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Retention Policy</div>
+          <div class="glossary-name">Data Retention Enforcement</div>
+          <p class="glossary-desc">A retention policy defines how long data must be kept before it can be deleted. For regulated clients, this may be mandated by law: HIPAA requires medical records to be retained for a minimum of six years from creation or from the last date of service. We document and enforce your retention schedule and prevent deletion until the required period has elapsed.</p>
+          <span class="glossary-tag">Legal and HIPAA tiers</span>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">S3 Glacier</div>
+          <div class="glossary-name">Cold Archive Tiering</div>
+          <p class="glossary-desc">Amazon S3 Glacier is a long-term archival storage class designed for data that needs to be preserved but is rarely accessed. Storage costs are significantly lower than S3 Standard. We automatically transition replica bucket objects to Glacier after 30 days, reducing ongoing costs for clients with large or growing archives while maintaining full redundancy.</p>
+          <span class="glossary-tag">Cold Archive and replica buckets</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATIONAL STEPS -->
+  <section class="stack-section" aria-labelledby="stack-heading">
+    <div class="container">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-title" id="stack-heading">What happens at every step</h2>
+      <p class="section-desc">From initial onboarding to monthly verification, here is the documented process that runs on your account.</p>
+
+      <div class="stack-steps">
+        <div class="stack-step">
+          <div class="stack-num" aria-hidden="true">01</div>
+          <div>
+            <div class="stack-step-name">Account provisioning</div>
+            <p class="stack-step-desc">A dedicated IAM user and S3 bucket are created in your name. The bucket blocks all public access, versioning is enabled, and default encryption is applied. A matching GCP project and service account are created and scoped to your storage bucket only. No shared infrastructure.</p>
+          </div>
+        </div>
+        <div class="stack-step">
+          <div class="stack-num" aria-hidden="true">02</div>
+          <div>
+            <div class="stack-step-name">Encryption configuration</div>
+            <p class="stack-step-desc">Server-side encryption is enabled at the bucket level. For HIPAA-tier clients, AWS KMS customer-managed keys are configured with a dedicated key per client. Rclone crypt is configured for client-side encryption before upload, so plaintext never reaches the cloud provider.</p>
+          </div>
+        </div>
+        <div class="stack-step">
+          <div class="stack-num" aria-hidden="true">03</div>
+          <div>
+            <div class="stack-step-name">Sync automation</div>
+            <p class="stack-step-desc">Rclone syncs your local data to both AWS and GCP nightly at 2:00 AM. A dry-run is performed first to detect anomalies before any live transfer. Logs from every sync pass are written to your client folder and stored for 90 days.</p>
+          </div>
+        </div>
+        <div class="stack-step">
+          <div class="stack-num" aria-hidden="true">04</div>
+          <div>
+            <div class="stack-step-name">AWS cross-region replication</div>
+            <p class="stack-step-desc">Your primary AWS bucket in us-east-1 automatically replicates to a replica bucket in us-west-2. This replication is managed by AWS and runs continuously. Replica objects transition to S3 Glacier after 30 days to reduce long-term storage cost.</p>
+          </div>
+        </div>
+        <div class="stack-step">
+          <div class="stack-num" aria-hidden="true">05</div>
+          <div>
+            <div class="stack-step-name">Weekly integrity checks</div>
+            <p class="stack-step-desc">Every Sunday, Rclone compares the checksums of your local copy against your cloud copies and logs any discrepancies. A clean check means your three copies are identical. Any mismatch triggers immediate investigation and resolution before your monthly report is issued.</p>
+          </div>
+        </div>
+        <div class="stack-step">
+          <div class="stack-num" aria-hidden="true">06</div>
+          <div>
+            <div class="stack-step-name">Monthly verification report</div>
+            <p class="stack-step-desc">At the end of each month you receive a plain-language written report confirming: last successful sync date for AWS and GCP, storage used versus allocated, integrity check result for the month, any alerts raised and how they were resolved, and current bucket encryption status. This report is suitable for compliance documentation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/index.html" class="footer-logo" aria-label="Stoneline Data home">
+        <div class="footer-logo-mark" aria-hidden="true">S</div>
+        Stoneline Data
+      </a>
+      <ul class="footer-links" role="list">
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/infrastructure.html">Infrastructure</a></li>
+        <li><a href="/compliance.html">Compliance</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/client-portal">Client Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-legal">
+      <ul class="footer-legal-links" role="list">
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms of Service</a></li>
+        <li><a href="/acceptable-use.html">Acceptable Use</a></li>
+        <li><a href="/data-processing.html">Data Processing Agreement</a></li>
+      </ul>
+      <span class="footer-copy">&#169; 2026 Stoneline Data LLC &nbsp;|&nbsp; <a href="https://custodyagency.com" rel="noopener noreferrer" class="footer-attr-link">Compliant Web Design</a> by Custody &amp; Agency</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoneline Data — Secure Data Custody &amp; Managed Storage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #0a0a0a;
+      --surface:       #161616;
+      --surface-2:     #202020;
+      --border:        #2a2a2a;
+      --border-light:  #383838;
+      --text:          #f0f0f0;
+      --text-secondary:#b8b8b8;
+      --accent-blue:   #4f9cf9;
+      --accent-blue-bg:#1a2a40;
+      --green:         #4ade80;
+      --green-bg:      #0f2a1a;
+      --font-sans:     'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:     'Geist Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+    a:focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-blue);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .nav-logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-sep {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 20px;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+      flex: 1;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 6px 13px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .btn-outline {
+      padding: 7px 15px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-outline:hover { color: var(--text); border-color: var(--border-light); background: var(--surface); }
+
+    .btn-solid {
+      padding: 7px 17px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+      text-decoration: none;
+      background: var(--text);
+      border: 1px solid var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-solid:hover { background: #d0d0d0; border-color: #d0d0d0; }
+
+    /* PAGE */
+    .page { padding-top: 62px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 120px 0 108px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(#333 1px, transparent 1px),
+        linear-gradient(90deg, #333 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 100%);
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 100%);
+      animation: gridDrift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 56px 28px; }
+    }
+
+    /* Three layered glows for depth */
+    .hero-glow-outer {
+      position: absolute;
+      top: -160px; left: 50%;
+      transform: translateX(-50%);
+      width: 1000px; height: 600px;
+      border-radius: 50%;
+      background: #071428;
+      filter: blur(100px);
+      pointer-events: none;
+      animation: glowPulse 6s ease-in-out infinite alternate;
+    }
+
+    .hero-glow-mid {
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 640px; height: 380px;
+      border-radius: 50%;
+      background: #0c2248;
+      filter: blur(70px);
+      pointer-events: none;
+      animation: glowPulse 4s 1s ease-in-out infinite alternate;
+    }
+
+    .hero-glow-core {
+      position: absolute;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+      width: 280px; height: 200px;
+      border-radius: 50%;
+      background: #1a3a6e;
+      filter: blur(50px);
+      pointer-events: none;
+      animation: glowPulse 3s 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      to   { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 14px 6px 10px;
+      border-radius: 100px;
+      border: 1px solid #3a3a3a;
+      background: #1a1a1a;
+      font-size: 14px;
+      font-weight: 500;
+      color: #c8c8c8;
+      font-family: var(--font-mono);
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      box-shadow: 0 0 10px var(--green), 0 0 20px #22c55e88;
+      animation: blink 2.4s ease infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--green), 0 0 20px #22c55e88; }
+      50%       { opacity: 0.6; box-shadow: 0 0 4px var(--green); }
+    }
+
+    .hero-headline {
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 700;
+      letter-spacing: -2.5px;
+      line-height: 1.0;
+      color: #ffffff;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 500;
+      color: #c0c0c0;
+      max-width: 500px;
+      margin-bottom: 40px;
+      line-height: 1.65;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-hero-primary {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      text-decoration: none;
+      background: var(--text);
+      border: 1px solid var(--text);
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-hero-primary:hover { background: #d0d0d0; border-color: #d0d0d0; }
+
+    .btn-hero-secondary {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .btn-hero-secondary:hover { color: var(--text); border-color: #505050; background: var(--surface-2); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 0;
+    }
+
+    .trust-inner {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .trust-inner::-webkit-scrollbar { display: none; }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .trust-icon {
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* SECTION SHARED */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* SERVICES */
+    .services-section { padding: 88px 0; }
+    .services-header { margin-bottom: 48px; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .service-card:nth-child(3n)        { border-right: none; }
+    .service-card:nth-last-child(-n+3) { border-bottom: none; }
+    .service-card:hover                { background: var(--surface-2); }
+
+    .service-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    .service-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .service-price { font-family: var(--font-mono); color: var(--text); }
+    .service-price .amount { font-size: 22px; font-weight: 600; letter-spacing: -0.8px; }
+    .service-price .period { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin-left: 2px; }
+
+    /* WHY STONELINE */
+    .infra-section { padding: 0 0 88px; }
+
+    .why-header {
+      margin-bottom: 48px;
+      max-width: 640px;
+    }
+
+    .trust-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .trust-card {
+      background: var(--surface);
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .trust-card:nth-child(3n)        { border-right: none; }
+    .trust-card:nth-last-child(-n+3) { border-bottom: none; }
+    .trust-card:hover                { background: var(--surface-2); }
+
+    .trust-card-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      margin-bottom: 18px;
+    }
+
+    .trust-card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+    }
+
+    .trust-card-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* CTA */
+    .cta-section { padding: 0 0 100px; }
+
+    .cta-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 72px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 280px; height: 180px;
+      border-radius: 50%;
+      background: #0d1e38;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    .cta-box .section-label,
+    .cta-box .section-title,
+    .cta-box .section-desc { position: relative; }
+    .cta-box .section-desc { margin: 0 auto 36px; }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 36px 0; }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .footer-logo-mark {
+      width: 22px; height: 22px;
+      background: var(--accent-blue);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:nth-child(3n)        { border-right: 1px solid var(--border); }
+      .service-card:nth-child(2n)        { border-right: none; }
+      .service-card:nth-last-child(-n+2) { border-bottom: none; }
+      .service-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .trust-cards { grid-template-columns: 1fr 1fr; }
+      .trust-card:nth-child(3n)        { border-right: 1px solid var(--border); }
+      .trust-card:nth-child(2n)        { border-right: none; }
+      .trust-card:nth-last-child(-n+2) { border-bottom: none; }
+      .trust-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .cta-box { padding: 48px 32px; }
+    }
+
+    @media (max-width: 640px) {
+      .services-grid  { grid-template-columns: 1fr; }
+      .service-card   { border-right: none !important; }
+      .trust-cards    { grid-template-columns: 1fr; }
+      .trust-card     { border-right: none !important; }
+      .nav-links      { display: none; }
+      .hero-headline  { font-size: 38px; letter-spacing: -1.5px; }
+      .cta-box        { padding: 40px 20px; }
+      .footer-inner   { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Stoneline Data home">
+      <div class="nav-logo-mark" aria-hidden="true">S</div>
+      <span class="nav-logo-text">Stoneline Data</span>
+    </a>
+    <div class="nav-sep" aria-hidden="true"></div>
+    <ul class="nav-links" role="list">
+      <li><a href="/services">Services</a></li>
+      <li><a href="/infrastructure">Infrastructure</a></li>
+      <li><a href="/compliance">Compliance</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/client-portal" class="btn-outline">Client Portal</a>
+      <a href="/contact" class="btn-solid">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow-outer" aria-hidden="true"></div>
+    <div class="hero-glow-mid" aria-hidden="true"></div>
+    <div class="hero-glow-core" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="status-badge" role="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          AES-256 Encrypted &middot; 3-2-1 Redundancy
+        </div>
+        <h1 class="hero-headline" id="hero-heading">
+          Your data.<br>Encrypted.<br>Redundant.<br>Accountable.
+        </h1>
+        <p class="hero-sub">
+          Boutique data custody and managed storage for small businesses, legal professionals, and medical offices who need documented accountability alongside their backup.
+        </p>
+        <div class="hero-ctas">
+          <a href="/contact" class="btn-hero-primary">Get a storage quote &#8594;</a>
+          <a href="/services" class="btn-hero-secondary">View all plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip" aria-label="Key features">
+    <div class="container">
+      <div class="trust-inner">
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128274;</div>Encrypted at rest and in transit</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#127760;</div>Multiple geographic locations</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128194;</div>Three independent copies of your data</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#127973;</div>HIPAA-compliant tier available</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128203;</div>Monthly verification reports</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128275;</div>MFA enforced on every account</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="services-header">
+        <p class="section-label">Services</p>
+        <h2 class="section-title" id="services-heading">Plans for every data footprint</h2>
+        <p class="section-desc">Transparent pricing across every tier, from personal archives to HIPAA-compliant custody.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#128451;&#65039;</div>
+          <div class="service-name">Personal Archive</div>
+          <p class="service-desc">1TB encrypted backup across two geographic locations. Monthly integrity verification included.</p>
+          <div class="service-price">
+            <span class="amount">$5&ndash;10</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#127970;</div>
+          <div class="service-name">Small Business</div>
+          <p class="service-desc">Managed backup with access logs, monthly reports, and dedicated operator accountability. Up to 5TB.</p>
+          <div class="service-price">
+            <span class="amount">$50&ndash;100</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#9878;&#65039;</div>
+          <div class="service-name">Legal &amp; Professional</div>
+          <p class="service-desc">Encrypted records custody with retention policy enforcement and a full audit trail.</p>
+          <div class="service-price">
+            <span class="amount">$75&ndash;150</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#127973;</div>
+          <div class="service-name">HIPAA-Compliant</div>
+          <p class="service-desc">Signed BAA, documented security controls, encrypted storage, and strict access management for medical clients.</p>
+          <div class="service-price">
+            <span class="amount">$150&ndash;300</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#129398;</div>
+          <div class="service-name">Cold Storage</div>
+          <p class="service-desc">Long-term archival for data that must be preserved indefinitely. Glacier-tiered for cost efficiency.</p>
+          <div class="service-price">
+            <span class="amount">$2&ndash;4</span><span class="period">/TB/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#128640;</div>
+          <div class="service-name">Setup &amp; Onboarding</div>
+          <p class="service-desc">Full account configuration including IAM, bucket setup, encryption, sync automation, and documentation.</p>
+          <div class="service-price">
+            <span class="amount">$50&ndash;150</span><span class="period"> one-time</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY STONELINE -->
+  <section class="infra-section" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="why-header">
+        <p class="section-label">Why Stoneline</p>
+        <h2 class="section-title" id="why-heading">Custody means accountability,<br>not just storage</h2>
+        <p class="section-desc">Anyone can sell you disk space. Stoneline Data gives you a named operator, a signed agreement, documented uptime, and a written report every month confirming your data is intact.</p>
+      </div>
+      <div class="trust-cards">
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">&#128274;</div>
+          <div class="trust-card-name">Encrypted at rest and in transit</div>
+          <p class="trust-card-desc">Your data is encrypted before it leaves your hands. We handle the keys, the process, and the documentation to prove it.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">&#127760;</div>
+          <div class="trust-card-name">Multiple geographic locations</div>
+          <p class="trust-card-desc">Your data lives in more than one place at all times. A single outage, fire, or regional event cannot touch your backup.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">&#128203;</div>
+          <div class="trust-card-name">Written monthly confirmation</div>
+          <p class="trust-card-desc">Every month you receive a plain-language report confirming your sync status, storage usage, and integrity check results.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">&#128221;</div>
+          <div class="trust-card-name">Signed custody agreement</div>
+          <p class="trust-card-desc">We put our commitments in writing before we touch your data. Scope, retention, encryption standard, and liability are all defined up front.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">&#127973;</div>
+          <div class="trust-card-name">HIPAA and compliance ready</div>
+          <p class="trust-card-desc">Medical and legal clients get a signed Business Associate Agreement and the documented security practices required for regulated data.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">&#128100;</div>
+          <div class="trust-card-name">A real person is responsible</div>
+          <p class="trust-card-desc">Stoneline is operator-managed. You know who to call. There is no ticket queue standing between you and the person who holds your data.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-glow" aria-hidden="true"></div>
+        <p class="section-label">Get started</p>
+        <h2 class="section-title" id="cta-heading">Talk to us about your storage needs</h2>
+        <p class="section-desc">Send us a brief description of your data and we will put together a quote within 24 hours.</p>
+        <div class="cta-actions">
+          <a href="/contact" class="btn-hero-primary">Get a storage quote &#8594;</a>
+          <a href="/compliance" class="btn-hero-secondary">HIPAA and compliance info</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="/" class="footer-logo" aria-label="Stoneline Data home">
+          <div class="footer-logo-mark" aria-hidden="true">S</div>
+          Stoneline Data
+        </a>
+        <ul class="footer-links" role="list">
+          <li><a href="/services">Services</a></li>
+          <li><a href="/infrastructure">Infrastructure</a></li>
+          <li><a href="/compliance">Compliance</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/client-portal">Client Portal</a></li>
+        </ul>
+        <span class="footer-copy">&#169; 2025 Stoneline Data LLC</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

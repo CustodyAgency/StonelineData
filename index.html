@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoneline Data — Secure Data Custody &amp; Managed Storage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #0a0a0a;
+      --surface:       #161616;
+      --surface-2:     #202020;
+      --border:        #2a2a2a;
+      --border-light:  #383838;
+      --text:          #f0f0f0;
+      --text-secondary:#b8b8b8;
+      --accent-blue:   #4f9cf9;
+      --accent-blue-bg:#1a2a40;
+      --green:         #4ade80;
+      --green-bg:      #0f2a1a;
+      --font-sans:     'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:     'Geist Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+    a:focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-blue);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .nav-logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-sep {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 20px;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+      flex: 1;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 6px 13px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .btn-outline {
+      padding: 7px 15px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-outline:hover { color: var(--text); border-color: var(--border-light); background: var(--surface); }
+
+    .btn-solid {
+      padding: 7px 17px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+      text-decoration: none;
+      background: var(--text);
+      border: 1px solid var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-solid:hover { background: #d0d0d0; border-color: #d0d0d0; }
+
+    /* PAGE */
+    .page { padding-top: 62px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 120px 0 108px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(#333 1px, transparent 1px),
+        linear-gradient(90deg, #333 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 100%);
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 100%);
+      animation: gridDrift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 56px 28px; }
+    }
+
+    /* Three layered glows for depth */
+    .hero-glow-outer {
+      position: absolute;
+      top: -160px; left: 50%;
+      transform: translateX(-50%);
+      width: 1000px; height: 600px;
+      border-radius: 50%;
+      background: #071428;
+      filter: blur(100px);
+      pointer-events: none;
+      animation: glowPulse 6s ease-in-out infinite alternate;
+    }
+
+    .hero-glow-mid {
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 640px; height: 380px;
+      border-radius: 50%;
+      background: #0c2248;
+      filter: blur(70px);
+      pointer-events: none;
+      animation: glowPulse 4s 1s ease-in-out infinite alternate;
+    }
+
+    .hero-glow-core {
+      position: absolute;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+      width: 280px; height: 200px;
+      border-radius: 50%;
+      background: #1a3a6e;
+      filter: blur(50px);
+      pointer-events: none;
+      animation: glowPulse 3s 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      to   { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    /* Hero two-column layout */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .security-svg {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+    }
+
+    /* SVG animations */
+    @keyframes ring-pulse-slow {
+      0%, 100% { opacity: 0.1; transform-origin: center; transform: scale(1); }
+      50%       { opacity: 0.25; transform: scale(1.04); }
+    }
+    @keyframes ring-pulse-mid {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50%       { opacity: 0.35; transform: scale(1.06); }
+    }
+    @keyframes orbit-spin {
+      from { transform-origin: 220px 220px; transform: rotate(0deg); }
+      to   { transform-origin: 220px 220px; transform: rotate(360deg); }
+    }
+    @keyframes pin-pulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+    @keyframes node-blink {
+      0%, 100% { opacity: 0.5; r: 4; }
+      50%       { opacity: 1;   r: 5.5; }
+    }
+    @keyframes node-blink-delay {
+      0%, 100% { opacity: 0.3; r: 4; }
+      50%       { opacity: 0.85; r: 5.5; }
+    }
+    @keyframes data-pulse {
+      0%   { opacity: 0; }
+      20%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .ring-pulse-slow { animation: ring-pulse-slow 4s ease-in-out infinite; }
+    .ring-pulse-mid  { animation: ring-pulse-mid  3s ease-in-out infinite 0.6s; }
+    .orbit-spin      { animation: orbit-spin 22s linear infinite; }
+    .pin-pulse       { animation: pin-pulse 2.5s ease-in-out infinite; }
+    .node-blink      { animation: node-blink 2.2s ease-in-out infinite; }
+    .node-blink-delay{ animation: node-blink-delay 2.2s ease-in-out infinite 1.1s; }
+    .data-pulse      { animation: data-pulse 3.2s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ring-pulse-slow, .ring-pulse-mid, .orbit-spin,
+      .pin-pulse, .node-blink, .node-blink-delay, .data-pulse {
+        animation: none;
+      }
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 14px 6px 10px;
+      border-radius: 100px;
+      border: 1px solid #3a3a3a;
+      background: #1a1a1a;
+      font-size: 14px;
+      font-weight: 500;
+      color: #c8c8c8;
+      font-family: var(--font-mono);
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      box-shadow: 0 0 10px var(--green), 0 0 20px #22c55e88;
+      animation: blink 2.4s ease infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--green), 0 0 20px #22c55e88; }
+      50%       { opacity: 0.6; box-shadow: 0 0 4px var(--green); }
+    }
+
+    .hero-headline {
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 700;
+      letter-spacing: -2.5px;
+      line-height: 1.0;
+      color: #ffffff;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 500;
+      color: #c0c0c0;
+      max-width: 500px;
+      margin-bottom: 40px;
+      line-height: 1.65;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-hero-primary {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      text-decoration: none;
+      background: var(--text);
+      border: 1px solid var(--text);
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-hero-primary:hover { background: #d0d0d0; border-color: #d0d0d0; }
+
+    .btn-hero-secondary {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .btn-hero-secondary:hover { color: var(--text); border-color: #505050; background: var(--surface-2); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 0;
+    }
+
+    .trust-inner {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .trust-inner::-webkit-scrollbar { display: none; }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .trust-icon {
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* SECTION SHARED */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* SERVICES */
+    .services-section { padding: 88px 0; }
+    .services-header { margin-bottom: 48px; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .service-card:nth-child(3n)        { border-right: none; }
+    .service-card:nth-last-child(-n+3) { border-bottom: none; }
+    .service-card:hover                { background: var(--surface-2); }
+
+    .service-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    .service-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .service-price { font-family: var(--font-mono); color: var(--text); }
+    .service-price .amount { font-size: 22px; font-weight: 600; letter-spacing: -0.8px; }
+    .service-price .period { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin-left: 2px; }
+
+    /* WHY STONELINE */
+    .infra-section { padding: 0 0 88px; }
+
+    .why-header {
+      margin-bottom: 48px;
+      max-width: 640px;
+    }
+
+    .trust-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .trust-card {
+      background: var(--surface);
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .trust-card:nth-child(3n)        { border-right: none; }
+    .trust-card:nth-last-child(-n+3) { border-bottom: none; }
+    .trust-card:hover                { background: var(--surface-2); }
+
+    .trust-card-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: #0e1f38;
+      border: 1px solid #1e3a5f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .trust-card:hover .trust-card-icon {
+      transform: scale(1.08);
+      border-color: #4f9cf9;
+    }
+
+    .trust-card-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .trust-card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .trust-card-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    /* CTA */
+    .cta-section { padding: 0 0 100px; }
+
+    .cta-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 72px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 280px; height: 180px;
+      border-radius: 50%;
+      background: #0d1e38;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    .cta-box .section-label,
+    .cta-box .section-title,
+    .cta-box .section-desc { position: relative; }
+    .cta-box .section-desc { margin: 0 auto 36px; }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    /* SKIP LINK */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      z-index: 9999;
+      background: var(--accent-blue);
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: top 0.1s;
+    }
+    .skip-link:focus { top: 16px; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 36px 0; }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .footer-legal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-legal-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-legal-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-legal-links a:hover { color: var(--text); }
+
+    .footer-attr-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .footer-attr-link:hover { opacity: 0.75; }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .footer-logo-mark {
+      width: 22px; height: 22px;
+      background: var(--accent-blue);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:nth-child(3n)        { border-right: 1px solid var(--border); }
+      .service-card:nth-child(2n)        { border-right: none; }
+      .service-card:nth-last-child(-n+2) { border-bottom: none; }
+      .service-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .trust-cards { grid-template-columns: 1fr 1fr; }
+      .trust-card:nth-child(3n)        { border-right: 1px solid var(--border); }
+      .trust-card:nth-child(2n)        { border-right: none; }
+      .trust-card:nth-last-child(-n+2) { border-bottom: none; }
+      .trust-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .cta-box { padding: 48px 32px; }
+    }
+
+    @media (max-width: 640px) {
+      .services-grid  { grid-template-columns: 1fr; }
+      .service-card   { border-right: none !important; }
+      .trust-cards    { grid-template-columns: 1fr; }
+      .trust-card     { border-right: none !important; }
+      .nav-links      { display: none; }
+      .hero-headline  { font-size: 38px; letter-spacing: -1.5px; }
+      .cta-box        { padding: 40px 20px; }
+      .footer-inner   { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Stoneline Data home">
+      <div class="nav-logo-mark" aria-hidden="true">S</div>
+      <span class="nav-logo-text">Stoneline Data</span>
+    </a>
+    <div class="nav-sep" aria-hidden="true"></div>
+    <ul class="nav-links" role="list">
+      <li><a href="/services.html">Services</a></li>
+      <li><a href="/infrastructure.html">Infrastructure</a></li>
+      <li><a href="/compliance.html">Compliance</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/client-portal" class="btn-outline">Client Portal</a>
+      <a href="/contact.html" class="btn-solid">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page" id="main-content">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow-outer" aria-hidden="true"></div>
+    <div class="hero-glow-mid" aria-hidden="true"></div>
+    <div class="hero-glow-core" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-layout">
+        <div class="hero-content">
+          <div class="status-badge" role="status">
+            <span class="status-dot" aria-hidden="true"></span>
+            AES-256 Encrypted &middot; 3-2-1 Redundancy
+          </div>
+          <h1 class="hero-headline" id="hero-heading">
+            Your data.<br>Encrypted.<br>Redundant.<br>Accountable.
+          </h1>
+          <p class="hero-sub">
+            Professional data custody and managed storage for regulated industries, individuals protecting irreplaceable files, and creators who need massive, verified backups.
+          </p>
+          <div class="hero-ctas">
+            <a href="/contact" class="btn-hero-primary">Get a storage quote &#8594;</a>
+            <a href="/services" class="btn-hero-secondary">View all plans</a>
+          </div>
+        </div>
+
+        <!-- Animated security visual -->
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" class="security-svg">
+            <defs>
+              <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#4f9cf9" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="chip-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#4f9cf9" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="blur-sm">
+                <feGaussianBlur stdDeviation="3"/>
+              </filter>
+            </defs>
+
+            <!-- Outermost pulse ring -->
+            <circle cx="220" cy="220" r="200" fill="none" stroke="#4f9cf9" stroke-width="0.5" opacity="0.15" class="ring-pulse-slow"/>
+            <circle cx="220" cy="220" r="170" fill="none" stroke="#4f9cf9" stroke-width="0.5" opacity="0.2" class="ring-pulse-mid"/>
+
+            <!-- Rotating dashed orbit -->
+            <circle cx="220" cy="220" r="148" fill="none" stroke="#4f9cf9" stroke-width="0.8" stroke-dasharray="6 10" opacity="0.3" class="orbit-spin"/>
+
+            <!-- Ambient glow behind chip -->
+            <circle cx="220" cy="220" r="120" fill="url(#core-glow)"/>
+
+            <!-- Chip body -->
+            <rect x="148" y="148" width="144" height="144" rx="14" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.2" opacity="0.95"/>
+            <!-- Chip inner surface detail -->
+            <rect x="160" y="160" width="120" height="120" rx="8" fill="none" stroke="#4f9cf9" stroke-width="0.5" opacity="0.35"/>
+            <!-- Chip center glow -->
+            <rect x="158" y="158" width="124" height="124" rx="10" fill="url(#chip-glow)"/>
+
+            <!-- Circuit trace lines on chip face — horizontal -->
+            <line x1="168" y1="185" x2="272" y2="185" stroke="#4f9cf9" stroke-width="0.6" opacity="0.25"/>
+            <line x1="168" y1="205" x2="272" y2="205" stroke="#4f9cf9" stroke-width="0.6" opacity="0.18"/>
+            <line x1="168" y1="235" x2="272" y2="235" stroke="#4f9cf9" stroke-width="0.6" opacity="0.18"/>
+            <line x1="168" y1="255" x2="272" y2="255" stroke="#4f9cf9" stroke-width="0.6" opacity="0.25"/>
+            <!-- Vertical -->
+            <line x1="185" y1="168" x2="185" y2="272" stroke="#4f9cf9" stroke-width="0.6" opacity="0.25"/>
+            <line x1="205" y1="168" x2="205" y2="272" stroke="#4f9cf9" stroke-width="0.6" opacity="0.18"/>
+            <line x1="235" y1="168" x2="235" y2="272" stroke="#4f9cf9" stroke-width="0.6" opacity="0.18"/>
+            <line x1="255" y1="168" x2="255" y2="272" stroke="#4f9cf9" stroke-width="0.6" opacity="0.25"/>
+
+            <!-- Pin leads — top -->
+            <line x1="176" y1="148" x2="176" y2="124" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <line x1="196" y1="148" x2="196" y2="118" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="220" y1="148" x2="220" y2="112" stroke="#4f9cf9" stroke-width="1.2" opacity="0.6" class="pin-pulse"/>
+            <line x1="244" y1="148" x2="244" y2="118" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="264" y1="148" x2="264" y2="124" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <!-- Pin leads — bottom -->
+            <line x1="176" y1="292" x2="176" y2="316" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <line x1="196" y1="292" x2="196" y2="322" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="220" y1="292" x2="220" y2="328" stroke="#4f9cf9" stroke-width="1.2" opacity="0.6" class="pin-pulse"/>
+            <line x1="244" y1="292" x2="244" y2="322" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="264" y1="292" x2="264" y2="316" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <!-- Pin leads — left -->
+            <line x1="148" y1="176" x2="124" y2="176" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <line x1="148" y1="196" x2="118" y2="196" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="148" y1="220" x2="112" y2="220" stroke="#4f9cf9" stroke-width="1.2" opacity="0.6" class="pin-pulse"/>
+            <line x1="148" y1="244" x2="118" y2="244" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="148" y1="264" x2="124" y2="264" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <!-- Pin leads — right -->
+            <line x1="292" y1="176" x2="316" y2="176" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+            <line x1="292" y1="196" x2="322" y2="196" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="292" y1="220" x2="328" y2="220" stroke="#4f9cf9" stroke-width="1.2" opacity="0.6" class="pin-pulse"/>
+            <line x1="292" y1="244" x2="322" y2="244" stroke="#4f9cf9" stroke-width="1.2" opacity="0.4"/>
+            <line x1="292" y1="264" x2="316" y2="264" stroke="#4f9cf9" stroke-width="1.2" opacity="0.5"/>
+
+            <!-- Shield icon centered on chip -->
+            <path d="M220 186 L244 196 L244 218 Q244 234 220 244 Q196 234 196 218 L196 196 Z"
+                  fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Lock body -->
+            <rect x="213" y="214" width="14" height="11" rx="2" fill="#4f9cf9" opacity="0.9"/>
+            <!-- Lock shackle -->
+            <path d="M215 214 L215 210 Q215 205 220 205 Q225 205 225 210 L225 214"
+                  fill="none" stroke="#4f9cf9" stroke-width="1.8" stroke-linecap="round"/>
+
+            <!-- Corner node dots — four corners of orbit -->
+            <circle cx="220" cy="72"  r="4" fill="#4f9cf9" opacity="0.7" class="node-blink"/>
+            <circle cx="368" cy="220" r="4" fill="#4f9cf9" opacity="0.7" class="node-blink-delay"/>
+            <circle cx="220" cy="368" r="4" fill="#4f9cf9" opacity="0.7" class="node-blink"/>
+            <circle cx="72"  cy="220" r="4" fill="#4f9cf9" opacity="0.7" class="node-blink-delay"/>
+
+            <!-- Data pulse dots on pins (animated) -->
+            <circle cx="220" cy="128" r="3" fill="#4f9cf9" class="data-pulse" style="animation-delay:0s"/>
+            <circle cx="112" cy="220" r="3" fill="#4f9cf9" class="data-pulse" style="animation-delay:0.4s"/>
+            <circle cx="220" cy="312" r="3" fill="#4f9cf9" class="data-pulse" style="animation-delay:0.8s"/>
+            <circle cx="328" cy="220" r="3" fill="#4f9cf9" class="data-pulse" style="animation-delay:1.2s"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip" aria-label="Key features">
+    <div class="container">
+      <div class="trust-inner">
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128274;</div>Encrypted at rest and in transit</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#127760;</div>Multiple geographic locations</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128194;</div>Three independent copies of your data</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#127973;</div>HIPAA-compliant tier available</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128203;</div>Monthly verification reports</div>
+        <div class="trust-item"><div class="trust-icon" aria-hidden="true">&#128275;</div>MFA enforced on every account</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="services-header">
+        <p class="section-label">Services</p>
+        <h2 class="section-title" id="services-heading">Plans for every data footprint</h2>
+        <p class="section-desc">Transparent pricing across every tier, from personal archives to HIPAA-compliant custody.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#128451;&#65039;</div>
+          <div class="service-name">Personal Archive</div>
+          <p class="service-desc">1TB encrypted backup across two geographic locations. Monthly integrity verification included.</p>
+          <div class="service-price">
+            <span class="amount">$5&ndash;10</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#127970;</div>
+          <div class="service-name">Small Business</div>
+          <p class="service-desc">Managed backup with access logs, monthly reports, and dedicated operator accountability. Up to 5TB.</p>
+          <div class="service-price">
+            <span class="amount">$50&ndash;100</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#9878;&#65039;</div>
+          <div class="service-name">Legal &amp; Professional</div>
+          <p class="service-desc">Encrypted records custody with retention policy enforcement and a full audit trail.</p>
+          <div class="service-price">
+            <span class="amount">$75&ndash;150</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#127973;</div>
+          <div class="service-name">HIPAA-Compliant</div>
+          <p class="service-desc">Signed BAA, documented security controls, encrypted storage, and strict access management for medical clients.</p>
+          <div class="service-price">
+            <span class="amount">$150&ndash;300</span><span class="period">/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#129398;</div>
+          <div class="service-name">Cold Storage</div>
+          <p class="service-desc">Long-term archival for data that must be preserved indefinitely. Glacier-tiered for cost efficiency.</p>
+          <div class="service-price">
+            <span class="amount">$2&ndash;4</span><span class="period">/TB/mo</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">&#128640;</div>
+          <div class="service-name">Setup &amp; Onboarding</div>
+          <p class="service-desc">Full account configuration including IAM, bucket setup, encryption, sync automation, and documentation.</p>
+          <div class="service-price">
+            <span class="amount">$50&ndash;150</span><span class="period"> one-time</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY STONELINE -->
+  <section class="infra-section" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="why-header">
+        <p class="section-label">Why Stoneline</p>
+        <h2 class="section-title" id="why-heading">Custody means accountability,<br>not just storage</h2>
+        <p class="section-desc">Anyone can sell you disk space. Stoneline Data gives you a named operator, a signed agreement, documented uptime, and a written report every month confirming your data is intact.</p>
+      </div>
+      <div class="trust-cards">
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f9cf9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="trust-card-name">Encrypted at rest and in transit</div>
+          <p class="trust-card-desc">Your data is encrypted before it leaves your hands. We handle the keys, the process, and the documentation to prove it.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f9cf9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>
+            </svg>
+          </div>
+          <div class="trust-card-name">Multiple geographic locations</div>
+          <p class="trust-card-desc">Your data lives in more than one place at all times. A single outage, fire, or regional event cannot touch your backup.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f9cf9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+          </div>
+          <div class="trust-card-name">Written monthly confirmation</div>
+          <p class="trust-card-desc">Every month you receive a plain-language report confirming your sync status, storage usage, and integrity check results.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f9cf9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <div class="trust-card-name">Signed custody agreement</div>
+          <p class="trust-card-desc">We put our commitments in writing before we touch your data. Scope, retention, encryption standard, and liability are all defined up front.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f9cf9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <path d="M17 21v-8H7v8M7 3v5h8"/>
+            </svg>
+          </div>
+          <div class="trust-card-name">HIPAA and compliance ready</div>
+          <p class="trust-card-desc">Medical and legal clients get a signed Business Associate Agreement and the documented security practices required for regulated data.</p>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f9cf9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="trust-card-name">A real person is responsible</div>
+          <p class="trust-card-desc">Stoneline is operator-managed. You know who to call. There is no ticket queue standing between you and the person who holds your data.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-glow" aria-hidden="true"></div>
+        <p class="section-label">Get started</p>
+        <h2 class="section-title" id="cta-heading">Talk to us about your storage needs</h2>
+        <p class="section-desc">Send us a brief description of your data and we will put together a quote within 24 hours.</p>
+        <div class="cta-actions">
+          <a href="/contact" class="btn-hero-primary">Get a storage quote &#8594;</a>
+          <a href="/compliance" class="btn-hero-secondary">HIPAA and compliance info</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="/" class="footer-logo" aria-label="Stoneline Data home">
+          <div class="footer-logo-mark" aria-hidden="true">S</div>
+          Stoneline Data
+        </a>
+        <ul class="footer-links" role="list">
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/infrastructure.html">Infrastructure</a></li>
+          <li><a href="/compliance.html">Compliance</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/client-portal">Client Portal</a></li>
+        </ul>
+      </div>
+      <div class="footer-legal">
+        <ul class="footer-legal-links" role="list">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+          <li><a href="/acceptable-use.html">Acceptable Use</a></li>
+          <li><a href="/data-processing.html">Data Processing Agreement</a></li>
+        </ul>
+        <span class="footer-copy">&#169; 2026 Stoneline Data LLC &nbsp;|&nbsp; <a href="https://custodyagency.com" rel="noopener noreferrer" class="footer-attr-link">Compliant Web Design</a> by Custody &amp; Agency</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

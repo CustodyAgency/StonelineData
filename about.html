@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Stoneline Data</title>
+  <meta name="description" content="Stoneline Data is an operator-managed data custody service. Learn about our model, our approach to accountability, and why operator-managed storage produces better outcomes for clients who need documented backup." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
+    .page-hero .page-title {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .page-hero .page-desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .about-section { padding: 80px 0 0; }
+    .about-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+    .about-cols.reverse { direction: rtl; }
+    .about-cols.reverse > * { direction: ltr; }
+    .about-text h2 {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      color: var(--text);
+      margin-bottom: 18px;
+      line-height: 1.1;
+    }
+    .about-text p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .about-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .principle-card {
+      background: var(--surface);
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .principle-card:last-child { border-right: none; }
+    .principle-card:hover { background: var(--surface-2); }
+    .principle-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+    .principle-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.4px;
+      margin-bottom: 12px;
+    }
+    .principle-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    .cta-strip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 64px;
+      text-align: center;
+      margin-bottom: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-strip-glow {
+      position: absolute;
+      top: -40px; left: 50%;
+      transform: translateX(-50%);
+      width: 280px; height: 160px;
+      border-radius: 50%;
+      background: #0d1e38;
+      filter: blur(50px);
+      pointer-events: none;
+    }
+    .cta-strip h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      color: var(--text);
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-strip p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 460px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      position: relative;
+    }
+    .cta-strip-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
+
+    @media (max-width: 900px) {
+      .about-cols { grid-template-columns: 1fr; gap: 40px; }
+      .about-cols.reverse { direction: ltr; }
+      .principle-grid { grid-template-columns: 1fr; }
+      .principle-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .principle-card:last-child { border-bottom: none; }
+      .cta-strip { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo" aria-label="Stoneline Data home">
+      <div class="nav-logo-mark" aria-hidden="true">S</div>
+      <span class="nav-logo-text">Stoneline Data</span>
+    </a>
+    <div class="nav-sep" aria-hidden="true"></div>
+    <ul class="nav-links" role="list">
+      <li><a href="/services.html">Services</a></li>
+      <li><a href="/infrastructure.html">Infrastructure</a></li>
+      <li><a href="/compliance.html">Compliance</a></li>
+      <li><a href="/about.html" aria-current="page">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/client-portal" class="btn-outline">Client Portal</a>
+      <a href="/contact.html" class="btn-solid">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page" id="main-content">
+
+  <section class="page-hero" aria-labelledby="about-heading">
+    <div class="container">
+      <p class="section-label">About</p>
+      <h1 class="page-title" id="about-heading">Operator-managed.<br>Accountable by design.</h1>
+      <p class="page-desc">Stoneline Data is a managed data custody service built on the principle that storage without accountability is just disk space. We pair enterprise-grade cloud infrastructure with named, documented human oversight.</p>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="container">
+
+      <!-- MODEL -->
+      <div class="about-cols">
+        <div class="about-text">
+          <p class="section-label">The Model</p>
+          <h2>Why operator-managed custody produces better outcomes</h2>
+          <p>Large-scale automated storage platforms are optimized for volume, not visibility. When something goes wrong, you interact with a ticket system, not a person who understands your data.</p>
+          <p>Stoneline Data operates differently. Every account is provisioned and monitored by a named operator who is responsible for your data. You know who to contact. Your custody agreement specifies exactly what that person is accountable for.</p>
+          <p>This model fits organizations and individuals for whom a data loss event carries real consequences: regulatory penalties, irreplaceable personal records, or years of creative work. When accountability matters, it needs to be explicit and documented.</p>
+        </div>
+        <div class="about-visual" aria-hidden="true">
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-num">3</div>
+              <div class="stat-label">independent copies of every client's data</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">2</div>
+              <div class="stat-label">separate cloud providers for geographic diversity</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">100%</div>
+              <div class="stat-label">of clients receive monthly written verification</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">AES&#8209;256</div>
+              <div class="stat-label">encryption applied to every account at every tier</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHO WE SERVE -->
+      <div class="about-cols reverse">
+        <div class="about-text">
+          <p class="section-label">Who We Serve</p>
+          <h2>Three kinds of clients. One standard of documentation.</h2>
+          <p>Regulated organizations such as medical offices, law firms, and financial services providers use Stoneline Data to satisfy the documented accountability requirements of HIPAA, legal retention standards, and internal audit programs. We provide the signed agreements, access logs, and written verification records their compliance programs require.</p>
+          <p>Individuals who want a personal data lockbox use Stoneline Data to protect estate documents, financial records, family media, and other irreplaceable files under a signed custody agreement with clear terms for access and retention.</p>
+          <p>Creators, photographers, videographers, and musicians use Stoneline Data to maintain verified off-site archives of their original work, with version retention policies that ensure nothing is silently overwritten and cold archive tiering that keeps large libraries affordable over time.</p>
+        </div>
+        <div class="about-visual" style="background: var(--accent-blue-bg); border-color: #1e3a5f;">
+          <p class="section-label" style="margin-bottom:20px;">Our commitment</p>
+          <p style="font-size:15px; color: var(--text-secondary); line-height:1.8; margin-bottom:16px;">We put our obligations in writing before we touch your data. Your custody agreement defines scope, encryption standard, retention schedule, and what happens when you need your data back.</p>
+          <p style="font-size:15px; color: var(--text-secondary); line-height:1.8;">You receive a monthly report confirming your backup is intact. These reports are suitable for compliance documentation. We raise any issues in writing and resolve them before your next report is due.</p>
+        </div>
+      </div>
+
+      <!-- PRINCIPLES -->
+      <p class="section-label" style="margin-bottom:16px;">Our Principles</p>
+      <h2 class="section-title" style="margin-bottom:40px;">What guides how we operate</h2>
+      <div class="principle-grid">
+        <div class="principle-card">
+          <div class="principle-num">01</div>
+          <div class="principle-name">Documentation before data</div>
+          <p class="principle-desc">We sign a custody agreement with every client before provisioning their storage. Scope, encryption standard, retention terms, and access controls are documented in writing first.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-num">02</div>
+          <div class="principle-name">Verification, not assumption</div>
+          <p class="principle-desc">We run weekly automated integrity checks to confirm your three copies match, and we report the result every month. We do not assume a backup is good; we prove it.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-num">03</div>
+          <div class="principle-name">Named accountability</div>
+          <p class="principle-desc">Every account has a named operator. You know exactly who is responsible for your data. There is no abstraction layer between you and the person who manages your custody.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-num">04</div>
+          <div class="principle-name">Minimum necessary access</div>
+          <p class="principle-desc">Your storage bucket is isolated from other client accounts. IAM permissions are scoped to the minimum required for operations. No cross-account data access is possible.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-num">05</div>
+          <div class="principle-name">Transparent sub-processors</div>
+          <p class="principle-desc">We use AWS and Google Cloud as sub-processors. Both are disclosed in your Data Processing Agreement and both maintain their own HIPAA BAA programs available to clients on request.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-num">06</div>
+          <div class="principle-name">Clean offboarding</div>
+          <p class="principle-desc">When a client leaves, we deliver their data, confirm receipt in writing, hold the data for 30 days, then delete all buckets and credentials. The paper trail closes cleanly on both sides.</p>
+        </div>
+      </div>
+
+      <!-- CTA STRIP -->
+      <div class="cta-strip">
+        <div class="cta-strip-glow" aria-hidden="true"></div>
+        <h2>Ready to talk about your storage needs?</h2>
+        <p>Send us a description of your data type and volume and we will return a quote within 24 hours.</p>
+        <div class="cta-strip-actions">
+          <a href="/contact.html" class="btn-hero-primary">Get a storage quote &#8594;</a>
+          <a href="/services.html" class="btn-hero-secondary">View all plans</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/index.html" class="footer-logo" aria-label="Stoneline Data home">
+        <div class="footer-logo-mark" aria-hidden="true">S</div>
+        Stoneline Data
+      </a>
+      <ul class="footer-links" role="list">
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/infrastructure.html">Infrastructure</a></li>
+        <li><a href="/compliance.html">Compliance</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/client-portal">Client Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-legal">
+      <ul class="footer-legal-links" role="list">
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms of Service</a></li>
+        <li><a href="/acceptable-use.html">Acceptable Use</a></li>
+        <li><a href="/data-processing.html">Data Processing Agreement</a></li>
+      </ul>
+      <span class="footer-copy">&#169; 2026 Stoneline Data LLC &nbsp;|&nbsp; <a href="https://custodyagency.com" rel="noopener noreferrer" class="footer-attr-link">Compliant Web Design</a> by Custody &amp; Agency</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
