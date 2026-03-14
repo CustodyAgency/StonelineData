@@ -82,7 +82,7 @@ nav {
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 13px;
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -90,50 +90,53 @@ nav {
 /* Stone slab mark */
 .nav-logo-mark {
   position: relative;
-  width: 22px;
-  height: 28px;
+  width: 30px;
+  height: 38px;
   flex-shrink: 0;
+  overflow: visible;
 }
 
 .nav-logo-slab {
   width: 100%;
   height: 100%;
-  background: #161616;
-  border: 1px solid #2a2a2a;
+  background: #111111;
+  border: 1px solid #333333;
   border-radius: 3px;
   transform: perspective(400px) rotateY(-15deg);
   position: relative;
-  overflow: hidden;
 }
 
 .nav-logo-neon {
   position: absolute;
   top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: calc(50% - 1px);
+  transform: none;
   width: 2px;
   height: 120%;
   background: var(--accent-blue);
   box-shadow:
-    0 0 8px var(--accent-blue),
-    0 0 16px rgba(79,156,249,0.55),
-    0 0 32px rgba(79,156,249,0.2);
+    0 0 6px #ffe066,
+    0 0 10px var(--accent-blue),
+    0 0 18px rgba(79,156,249,0.7),
+    0 0 32px rgba(255,210,60,0.35),
+    0 0 48px rgba(79,156,249,0.18);
   z-index: 2;
+  pointer-events: none;
 }
 
 /* One-line text: STONELINE · DATA */
 .nav-logo-wordmark {
   display: flex;
   align-items: baseline;
-  gap: 7px;
+  gap: 8px;
   white-space: nowrap;
   user-select: none;
 }
 
 .nav-logo-name {
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 800;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.5px;
   color: var(--text);
   text-transform: uppercase;
   line-height: 1;
@@ -141,7 +144,7 @@ nav {
 
 .nav-logo-sub {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 4px;
   color: var(--accent-blue);
