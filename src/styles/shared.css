@@ -190,6 +190,84 @@ nav {
   margin-left: auto;
 }
 
+/* HAMBURGER BUTTON */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: transform 0.22s, opacity 0.22s, background 0.15s;
+  transform-origin: center;
+}
+.nav-hamburger:hover span { background: var(--text); }
+.nav-hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* MOBILE DRAWER */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 62px;
+  left: 0; right: 0;
+  z-index: 99;
+  background: #0d0d0d;
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px 24px;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+.mobile-menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.mobile-menu-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+.mobile-menu-links a {
+  display: block;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+.mobile-menu-links a:hover,
+.mobile-menu-links a[aria-current="page"] { color: var(--text); background: var(--surface-2); }
+.mobile-menu-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.mobile-btn { flex: 1; text-align: center; }
+
 .btn-outline {
   padding: 7px 15px;
   border-radius: 7px;
@@ -327,27 +405,76 @@ footer { border-top: 1px solid var(--border); padding: 36px 0; }
 }
 .footer-attr-link:hover { opacity: 0.75; }
 
+/* FOOTER LOGO — matches nav logo mark */
 .footer-logo {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 13px;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 .footer-logo-mark {
-  width: 22px; height: 22px;
+  position: relative;
+  width: 24px;
+  height: 30px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.footer-logo-slab {
+  width: 100%;
+  height: 100%;
+  background: #111111;
+  border: 1px solid #333333;
+  border-radius: 3px;
+  transform: perspective(400px) rotateY(-15deg);
+  position: relative;
+}
+
+.footer-logo-neon {
+  position: absolute;
+  top: -10%;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 120%;
   background: var(--accent-blue);
-  border-radius: 5px;
+  box-shadow:
+    0 0 6px #ffe066,
+    0 0 10px var(--accent-blue),
+    0 0 18px rgba(79,156,249,0.7),
+    0 0 32px rgba(255,210,60,0.35),
+    0 0 48px rgba(79,156,249,0.18);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.footer-logo-wordmark {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  gap: 7px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.footer-logo-name {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.footer-logo-sub {
   font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: #000;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.8;
 }
 
 .footer-links {
@@ -451,6 +578,8 @@ footer { border-top: 1px solid var(--border); padding: 36px 0; }
   .nav-links { display: none; }
   .nav-actions { display: none; }
   .nav-sep { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: block; }
   .nav-logo-mark { width: 20px; height: 26px; }
   .nav-logo-name { font-size: 15px; }
   .nav-logo-sub { display: none; }

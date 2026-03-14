@@ -52,8 +52,25 @@ function isCurrent(page: string) {
       <a href="/client-portal" class="btn-outline">Client Portal</a>
       <a href="/contact" class="btn-solid">Get a Quote</a>
     </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <ul class="mobile-menu-links" role="list">
+    <li><a href="/services" aria-current={isCurrent('services')}>Services</a></li>
+    <li><a href="/infrastructure" aria-current={isCurrent('infrastructure')}>Infrastructure</a></li>
+    <li><a href="/compliance" aria-current={isCurrent('compliance')}>Compliance</a></li>
+    <li><a href="/about" aria-current={isCurrent('about')}>About</a></li>
+    <li><a href="/contact" aria-current={isCurrent('contact')}>Contact</a></li>
+  </ul>
+  <div class="mobile-menu-actions">
+    <a href="/client-portal" class="btn-outline mobile-btn">Client Portal</a>
+    <a href="/contact" class="btn-solid mobile-btn">Get a Quote</a>
+  </div>
+</div>
 
 <div class="page" id="main-content">
   <slot />
@@ -63,8 +80,14 @@ function isCurrent(page: string) {
   <div class="container">
     <div class="footer-inner">
       <a href="/" class="footer-logo" aria-label="Stoneline Data home">
-        <div class="footer-logo-mark" aria-hidden="true">S</div>
-        Stoneline Data
+        <div class="footer-logo-mark" aria-hidden="true">
+          <div class="footer-logo-slab"></div>
+          <div class="footer-logo-neon"></div>
+        </div>
+        <div class="footer-logo-wordmark" aria-hidden="true">
+          <span class="footer-logo-name">Stoneline</span>
+          <span class="footer-logo-sub">Data</span>
+        </div>
       </a>
       <ul class="footer-links" role="list">
         <li><a href="/services">Services</a></li>
@@ -87,5 +110,24 @@ function isCurrent(page: string) {
   </div>
 </footer>
 
+<script>
+  const hamburger = document.getElementById('nav-hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger?.addEventListener('click', () => {
+    const open = mobileMenu?.classList.toggle('is-open');
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileMenu?.setAttribute('aria-hidden', open ? 'false' : 'true');
+    hamburger.classList.toggle('is-open', !!open);
+  });
+  // Close on link click
+  mobileMenu?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      hamburger?.classList.remove('is-open');
+    });
+  });
+</script>
 </body>
 </html>
