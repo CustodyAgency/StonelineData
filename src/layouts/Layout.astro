@@ -1,0 +1,91 @@
+---
+import '../styles/shared.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  currentPage?: string;
+}
+const { title, description, currentPage = '' } = Astro.props;
+
+function isCurrent(page: string) {
+  return currentPage === page ? 'page' : undefined;
+}
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <slot name="head" />
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Stoneline Data home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <div class="nav-logo-slab"></div>
+        <div class="nav-logo-neon"></div>
+      </div>
+      <div class="nav-logo-wordmark" aria-hidden="true">
+        <span class="nav-logo-name">Stoneline</span>
+        <span class="nav-logo-sub">Data</span>
+      </div>
+    </a>
+    <div class="nav-sep" aria-hidden="true"></div>
+    <ul class="nav-links" role="list">
+      <li><a href="/services" aria-current={isCurrent('services')}>Services</a></li>
+      <li><a href="/infrastructure" aria-current={isCurrent('infrastructure')}>Infrastructure</a></li>
+      <li><a href="/compliance" aria-current={isCurrent('compliance')}>Compliance</a></li>
+      <li><a href="/about" aria-current={isCurrent('about')}>About</a></li>
+      <li><a href="/contact" aria-current={isCurrent('contact')}>Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/client-portal" class="btn-outline">Client Portal</a>
+      <a href="/contact" class="btn-solid">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page" id="main-content">
+  <slot />
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo" aria-label="Stoneline Data home">
+        <div class="footer-logo-mark" aria-hidden="true">S</div>
+        Stoneline Data
+      </a>
+      <ul class="footer-links" role="list">
+        <li><a href="/services">Services</a></li>
+        <li><a href="/infrastructure">Infrastructure</a></li>
+        <li><a href="/compliance">Compliance</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/client-portal">Client Portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-legal">
+      <ul class="footer-legal-links" role="list">
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+        <li><a href="/acceptable-use">Acceptable Use</a></li>
+        <li><a href="/data-processing">Data Processing Agreement</a></li>
+      </ul>
+      <span class="footer-copy">&#169; 2026 Stoneline Data LLC &nbsp;|&nbsp; <a href="https://custodydesign.com" rel="noopener noreferrer" class="footer-attr-link">Compliant Web Design</a> by Custody &amp; Agency</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

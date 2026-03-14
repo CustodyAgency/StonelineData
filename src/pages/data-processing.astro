@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Data Processing Agreement — Stoneline Data" description="Stoneline Data Data Processing Agreement. Controller and processor roles, sub-processors, data subject rights, breach notification, and deletion procedures." currentPage="">
+  <div class="legal-page">
+    <div class="container">
+      <p class="section-label">Legal</p>
+      <h1>Data Processing Agreement</h1>
+      <p class="legal-meta">Effective date: March 13, 2026 &nbsp;&middot;&nbsp; Version 1.0</p>
+
+      <div class="legal-body">
+
+        <h2>Purpose and Scope</h2>
+        <p>This Data Processing Agreement ("DPA") supplements the <a href="/terms">Terms of Service</a> and any executed custody agreement between you (the "Controller" or "Client") and Stoneline Data LLC ("Stoneline Data," or the "Processor"). It governs the processing of personal data that Stoneline Data handles on your behalf when providing managed data custody services.</p>
+        <p>This DPA is intended to satisfy the requirements of applicable data protection laws including the European Union General Data Protection Regulation (GDPR) Article 28, the California Consumer Privacy Act (CCPA), and HIPAA where a separate Business Associate Agreement is not applicable or is supplementary to this document.</p>
+        <p>For clients who require a signed, countersigned DPA as a standalone document (for regulatory or procurement purposes), contact us via the <a href="/contact">Contact</a> page to request an executed copy.</p>
+
+        <h2>Definitions</h2>
+        <p>For the purposes of this DPA:</p>
+        <ul>
+          <li><strong>Personal Data</strong> means any information relating to an identified or identifiable natural person that is processed by Stoneline Data on behalf of the Client as part of the storage service.</li>
+          <li><strong>Controller</strong> means the Client, who determines the purposes and means of processing Personal Data.</li>
+          <li><strong>Processor</strong> means Stoneline Data LLC, which processes Personal Data on behalf of the Controller.</li>
+          <li><strong>Sub-Processor</strong> means a third-party processor engaged by Stoneline Data to process Personal Data.</li>
+          <li><strong>Processing</strong> means any operation performed on Personal Data, including storage, retrieval, transmission, and deletion.</li>
+          <li><strong>Data Subject</strong> means the natural person to whom Personal Data relates.</li>
+          <li><strong>Security Incident</strong> means any unauthorized or unlawful access, destruction, loss, alteration, or disclosure of Personal Data.</li>
+        </ul>
+
+        <h2>Roles and Responsibilities</h2>
+        <p>The Client is the Controller of Personal Data submitted for storage. Stoneline Data processes that data only as instructed by the Client in accordance with the custody agreement and these Terms. Stoneline Data does not determine the purposes for which Personal Data is processed, does not sell, rent, or otherwise commercially exploit Client data, and processes data only to provide and maintain the contracted storage services.</p>
+
+        <h2>Instructions for Processing</h2>
+        <p>Stoneline Data processes Personal Data solely on the documented instructions of the Controller, which are constituted by the custody agreement and these Terms. Stoneline Data will promptly inform the Controller if, in its opinion, an instruction infringes applicable data protection law. Stoneline Data will not process Personal Data for any purpose beyond what is necessary to provide the service.</p>
+
+        <h2>Technical and Organizational Measures</h2>
+        <p>Stoneline Data implements and maintains appropriate technical and organizational measures to protect Personal Data against unauthorized access, accidental or unlawful destruction, loss, alteration, or disclosure. These measures include:</p>
+        <ul>
+          <li>AES-256 encryption at rest on all storage buckets</li>
+          <li>TLS 1.2 or higher enforced for all data in transit</li>
+          <li>Dedicated storage accounts per client with no cross-account data access</li>
+          <li>Multi-factor authentication required for all privileged system access</li>
+          <li>S3 access logging to an isolated, tamper-evident log bucket</li>
+          <li>Weekly automated integrity checks with logged results</li>
+          <li>Version retention on primary storage buckets protecting against ransomware and accidental deletion</li>
+          <li>Documented incident response procedures with defined detection and notification timelines</li>
+        </ul>
+        <p>Full technical details are available on the <a href="/infrastructure">Infrastructure</a> page.</p>
+
+        <h2>Sub-Processors</h2>
+        <p>Stoneline Data uses the following sub-processors to deliver the storage service. All sub-processors are bound by data processing terms no less protective than this DPA.</p>
+
+        <dl class="def-card">
+          <dt>Amazon Web Services (AWS)</dt>
+          <dd>Role: Primary cloud storage provider (Amazon S3, Amazon S3 Glacier, AWS KMS, AWS CloudWatch). Purpose: Primary and replica bucket storage, access logging, anomaly monitoring. Location: United States (us-east-1 primary, us-west-2 replica). AWS maintains its own HIPAA BAA, SOC 2 Type II, ISO 27001, and PCI DSS certifications. AWS DPA: <a href="https://aws.amazon.com/agreement/" rel="noopener noreferrer">aws.amazon.com/agreement</a></dd>
+        </dl>
+        <dl class="def-card">
+          <dt>Google Cloud Platform (GCP)</dt>
+          <dd>Role: Secondary cloud storage provider (Cloud Storage). Purpose: Geographic redundancy copy. Location: United States (multi-region). GCP maintains HIPAA BAA availability, SOC 2 Type II, ISO 27001, and PCI DSS certifications. GCP DPA: <a href="https://cloud.google.com/terms/data-processing-addendum" rel="noopener noreferrer">cloud.google.com/terms/data-processing-addendum</a></dd>
+        </dl>
+        <dl class="def-card">
+          <dt>Stripe</dt>
+          <dd>Role: Payment processor. Purpose: Billing and subscription management. Stripe processes payment information directly and Stoneline Data does not receive or store payment card numbers. Stripe is PCI DSS Level 1 certified. Stripe DPA: <a href="https://stripe.com/legal/dpa" rel="noopener noreferrer">stripe.com/legal/dpa</a></dd>
+        </dl>
+
+        <p>We will notify active clients of any intended changes to sub-processors (additions or replacements) with at least 14 days advance notice, providing an opportunity to object before the change takes effect.</p>
+
+        <h2>Confidentiality</h2>
+        <p>Stoneline Data ensures that persons authorized to process Personal Data have committed to confidentiality or are bound by an appropriate statutory obligation of confidentiality. Personnel with access to client storage accounts are limited to those with an operational need, and that access is logged.</p>
+
+        <h2>Data Subject Rights</h2>
+        <p>To the extent that Personal Data held in custody is subject to data subject rights requests (such as access, rectification, erasure, portability, or objection under GDPR or CCPA), Stoneline Data will assist the Controller in responding to such requests by providing access to or deletion of stored data upon written instruction, within the timeframes required by the custody agreement.</p>
+        <p>Stoneline Data is not responsible for fielding data subject requests directly from individuals. The Controller is responsible for communicating with data subjects and directing requests to Stoneline Data where data held in storage is involved.</p>
+
+        <h2>Security Incident and Breach Notification</h2>
+        <p>In the event of a confirmed or reasonably suspected Security Incident affecting Personal Data processed on behalf of the Client, Stoneline Data will:</p>
+        <ul>
+          <li>Notify the Controller without undue delay and in any event within 48 hours of becoming aware of the incident</li>
+          <li>Provide an initial notification including: the nature of the incident, the categories and approximate volume of Personal Data affected, the likely consequences, and the measures taken or proposed to address the incident</li>
+          <li>Cooperate with the Controller in investigating the incident, mitigating harm, and fulfilling any regulatory notification obligations</li>
+        </ul>
+        <p>Notification timelines for HIPAA clients are governed by the executed Business Associate Agreement and HIPAA breach notification rules (45 CFR 164.400), which require notification to the covered entity without unreasonable delay and in no case later than 60 days after discovery.</p>
+
+        <h2>International Data Transfers</h2>
+        <p>All storage infrastructure used by Stoneline Data is located in the United States. If you are subject to laws that restrict international data transfers (such as GDPR for EU/EEA data), confirm transfer mechanisms in the applicable jurisdiction before transferring Personal Data of EU/EEA residents. Upon request, Stoneline Data will execute Standard Contractual Clauses or other appropriate transfer mechanisms.</p>
+
+        <h2>Audits and Inspections</h2>
+        <p>The Controller may request evidence of Stoneline Data's compliance with this DPA no more than once per calendar year, upon 30 days written notice. Stoneline Data will provide documentation of applicable controls and, where feasible, facilitate a reasonable audit by the Controller or an independent auditor under confidentiality obligations. Audit costs are borne by the Controller.</p>
+
+        <h2>Return and Deletion of Data</h2>
+        <p>Upon termination of the service relationship, Stoneline Data will make Client data available for export within 10 business days of the termination effective date, by a method agreed in the custody agreement (secure S3 presigned URL or physical media at Client expense). After confirmed delivery and a 30-day hold period, Stoneline Data will securely delete all copies of Client Personal Data from its storage systems and sub-processor platforms, and will provide written certification of deletion.</p>
+        <p>Stoneline Data may retain minimal metadata necessary for legal, audit, and dispute resolution purposes for up to 3 years, as described in the <a href="/privacy">Privacy Policy</a>.</p>
+
+        <h2>Duration</h2>
+        <p>This DPA is effective from the date the custody agreement is executed and remains in effect until the service relationship terminates and all Client Personal Data has been returned or deleted as described above.</p>
+
+        <h2>Contact and Signed Copies</h2>
+        <p>To request a countersigned copy of this DPA for your compliance records, or to discuss specific processing requirements, contact us via the <a href="/contact">Contact</a> page.</p>
+
+      </div>
+    </div>
+  </div>
+</Layout>

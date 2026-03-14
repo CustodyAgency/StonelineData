@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Terms of Service — Stoneline Data" description="Stoneline Data Terms of Service. Service scope, payment terms, SLA, limitation of liability, and governing law." currentPage="">
+  <div class="legal-page">
+    <div class="container">
+      <p class="section-label">Legal</p>
+      <h1>Terms of Service</h1>
+      <p class="legal-meta">Effective date: March 13, 2026 &nbsp;&middot;&nbsp; Last updated: March 13, 2026</p>
+
+      <div class="legal-body">
+
+        <h2>Agreement to Terms</h2>
+        <p>These Terms of Service ("Terms") govern your access to and use of the website and managed data custody services provided by Stoneline Data LLC ("Stoneline Data," "we," "our," or "us"). By requesting service or accepting a custody agreement, you agree to be bound by these Terms.</p>
+        <p>If you are using the service on behalf of an organization, you represent that you have authority to bind that organization to these Terms, and references to "you" include that organization.</p>
+
+        <h2>Services</h2>
+        <p>Stoneline Data provides managed data custody and encrypted cloud storage services. The specific scope of services, storage tier, pricing, and any compliance-specific obligations (such as a Business Associate Agreement) are defined in the individual custody agreement executed between you and Stoneline Data before service begins.</p>
+        <p>Services include, as applicable to your plan tier: provisioning of dedicated cloud storage accounts, encryption configuration, automated nightly synchronization, monthly integrity verification, access logging, and written monthly verification reports. Services do not include data entry, data recovery from corrupted source files, or IT support beyond storage operations.</p>
+
+        <h2>Account Responsibilities</h2>
+        <p>You are responsible for:</p>
+        <ul>
+          <li>Ensuring the data you submit for custody does not violate applicable law or our <a href="/acceptable-use">Acceptable Use Policy</a></li>
+          <li>Maintaining the accuracy of your contact and billing information</li>
+          <li>Notifying us promptly of any unauthorized access to your account or data</li>
+          <li>Providing accurate information about data type and volume to allow appropriate provisioning</li>
+        </ul>
+        <p>You remain the owner of all data held under custody. Stoneline Data acquires no intellectual property rights or ownership interest in your data by virtue of providing storage services.</p>
+
+        <h2>Payments and Billing</h2>
+        <p>Fees are charged monthly in advance per the pricing agreed in your custody agreement. Billing is processed via Stripe. You authorize recurring charges to your payment method on file until your account is terminated or you request cancellation.</p>
+        <p>One-time setup fees are charged upon account provisioning and are non-refundable after setup is complete.</p>
+        <p>If a payment fails, we will notify you and allow a cure period of 10 business days before service is suspended. Data is held for an additional 30 days after suspension before any deletion, and we will contact you before proceeding with deletion.</p>
+        <p>We may adjust pricing with 60 days advance written notice. Continued use of the service after the notice period constitutes acceptance of the new pricing.</p>
+
+        <h2>Service Levels</h2>
+        <p>We target 99.9% uptime for account management and sync operations, measured monthly excluding scheduled maintenance windows. Sync operations depend on the operational availability of AWS and Google Cloud Platform, which maintain their own service level agreements.</p>
+        <p>Monthly verification reports will be delivered within the first 10 business days of each calendar month covering the prior month's activity. If an integrity check identifies an anomaly, we will notify you in writing within 2 business days of detection and provide a resolution timeline.</p>
+        <p>These service levels are operational targets. They are not guaranteed uptime warranties and do not give rise to service credits or penalties unless separately agreed in your custody agreement.</p>
+
+        <h2>Confidentiality</h2>
+        <p>We treat your data and account information as confidential. We do not access, review, or disclose the content of your stored files except as required to provide the service, respond to a legal requirement, or investigate a security incident. Stoneline Data personnel with access to account infrastructure are subject to confidentiality obligations.</p>
+
+        <h2>Acceptable Use</h2>
+        <p>Use of our service is subject to the <a href="/acceptable-use">Acceptable Use Policy</a>, incorporated into these Terms by reference. Violations may result in suspension or termination of service.</p>
+
+        <h2>Termination</h2>
+        <p><strong>By you.</strong> You may terminate service at any time by notifying us in writing. Monthly fees paid for the current billing period are non-refundable. We will deliver your data and follow the offboarding process described below.</p>
+        <p><strong>By us.</strong> We may terminate service with 30 days written notice for any reason. We may terminate immediately without notice if you materially breach these Terms, violate the Acceptable Use Policy, or create legal exposure for Stoneline Data.</p>
+        <p><strong>Offboarding.</strong> Upon termination, we will export your data and provide access via secure S3 presigned URL or, at your request and expense, a physical drive. We will confirm data delivery in writing. After a 30-day hold period we will delete all storage buckets and access credentials associated with your account and provide written confirmation of deletion.</p>
+
+        <h2>Limitation of Liability</h2>
+        <p>To the maximum extent permitted by applicable law, Stoneline Data's total liability for any claim arising from or related to these Terms or your use of the service shall not exceed the total fees paid by you in the 12 months preceding the claim.</p>
+        <p>Stoneline Data shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data loss, or business interruption, regardless of the cause of action or the theory of liability, even if we have been advised of the possibility of such damages.</p>
+        <p>Nothing in these Terms limits liability for fraud, gross negligence, willful misconduct, or any liability that cannot be excluded by law.</p>
+
+        <h2>Indemnification</h2>
+        <p>You agree to indemnify and hold harmless Stoneline Data, its officers, employees, and agents from and against any claims, damages, losses, and expenses (including reasonable legal fees) arising from: (a) your use of the service in violation of these Terms or applicable law; (b) data you submit for custody that violates the rights of a third party; or (c) your breach of any representation made in these Terms.</p>
+
+        <h2>Disclaimer of Warranties</h2>
+        <p>Except as expressly stated in your custody agreement, the service is provided "as is" and "as available" without warranties of any kind, whether express or implied, including implied warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not warrant that the service will be error-free or uninterrupted.</p>
+
+        <h2>Governing Law and Disputes</h2>
+        <p>These Terms are governed by the laws of the state in which Stoneline Data LLC is registered, without regard to conflict of law principles. Any dispute arising under these Terms that cannot be resolved informally shall be submitted to binding arbitration administered under the rules of the American Arbitration Association, conducted in English. The arbitration award shall be final and enforceable in any court of competent jurisdiction.</p>
+        <p>Notwithstanding the foregoing, either party may seek emergency injunctive relief in a court of competent jurisdiction where necessary to prevent immediate harm.</p>
+
+        <h2>Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. Material changes will be communicated to active clients by email at least 30 days before taking effect. Continued use of the service after that date constitutes acceptance of the updated Terms.</p>
+
+        <h2>Contact</h2>
+        <p>Questions about these Terms should be directed to us via the <a href="/contact">Contact</a> page.</p>
+
+      </div>
+    </div>
+  </div>
+</Layout>

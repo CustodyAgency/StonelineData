@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Compliance &amp; Regulatory — Stoneline Data" description="Stoneline Data supports HIPAA, FERPA, and general data governance requirements. Learn about Business Associate Agreements, audit trails, retention policies, and how we document compliance for regulated data." currentPage="compliance">
+  <style>
+    .page-hero { padding:80px 0 64px; border-bottom:1px solid var(--border); overflow:hidden; }
+    .page-hero-layout { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:48px; }
+    .page-hero .page-title { font-size:clamp(36px,5vw,60px); font-weight:700; letter-spacing:-2px; line-height:1.05; color:var(--text); margin-bottom:20px; }
+    .page-hero .page-desc { font-size:18px; color:var(--text-secondary); max-width:520px; line-height:1.7; }
+    .page-hero-visual { display:flex; align-items:center; justify-content:center; }
+    .hero-page-svg { width:100%; max-width:400px; height:auto; }
+    @keyframes seal-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    @keyframes check-draw { 0%{stroke-dashoffset:30} 60%,100%{stroke-dashoffset:0} }
+    @keyframes doc-line { 0%,100%{opacity:.22} 50%{opacity:.55} }
+    @keyframes seal-glow { 0%,100%{opacity:.65} 50%{opacity:1} }
+    @keyframes sig-draw { 0%{stroke-dashoffset:120} 100%{stroke-dashoffset:0} }
+    .dspin { animation:seal-spin 20s linear infinite; transform-origin:310px 115px; }
+    .dl1{animation:doc-line 3s ease-in-out infinite}
+    .dl2{animation:doc-line 3s .5s ease-in-out infinite}
+    .dl3{animation:doc-line 3s 1s ease-in-out infinite}
+    .dl4{animation:doc-line 3s 1.5s ease-in-out infinite}
+    .ck1{stroke-dasharray:30;animation:check-draw 2s 0.3s ease-out forwards}
+    .ck2{stroke-dasharray:30;animation:check-draw 2s 1.1s ease-out forwards}
+    .ck3{stroke-dasharray:30;animation:check-draw 2s 1.9s ease-out forwards}
+    .sglow{animation:seal-glow 2.5s ease-in-out infinite}
+    .sig{stroke-dasharray:120;stroke-dashoffset:120;animation:sig-draw 2.5s 0.8s ease-out forwards}
+    @media(prefers-reduced-motion:reduce){.dspin,.dl1,.dl2,.dl3,.dl4,.ck1,.ck2,.ck3,.sglow,.sig{animation:none;stroke-dashoffset:0}}
+    @media(max-width:768px){.page-hero-layout{grid-template-columns:1fr}.page-hero-visual{display:none}}
+    .compliance-body { padding:80px 0 100px; }
+    .compliance-cols { display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:flex-start; }
+    .compliance-nav { position:sticky; top:80px; }
+    .compliance-nav-label { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-secondary); margin-bottom:14px; }
+    .compliance-nav ul { list-style:none; display:flex; flex-direction:column; gap:2px; }
+    .compliance-nav a { display:block; padding:9px 14px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-secondary); text-decoration:none; transition:color 0.15s,background 0.15s; }
+    .compliance-nav a:hover { color:var(--text); background:var(--surface-2); }
+    .compliance-content { max-width:700px; }
+    .compliance-section { margin-bottom:72px; }
+    .compliance-section h2 { font-size:26px; font-weight:700; color:var(--text); letter-spacing:-0.8px; margin-bottom:16px; padding-top:16px; }
+    .compliance-section p { font-size:15px; color:var(--text-secondary); line-height:1.8; margin-bottom:16px; }
+    .compliance-section ul { padding-left:20px; margin-bottom:16px; }
+    .compliance-section li { font-size:15px; color:var(--text-secondary); line-height:1.8; margin-bottom:6px; }
+    .regulation-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px; margin-bottom:16px; }
+    .regulation-tag { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--accent-blue); margin-bottom:8px; }
+    .regulation-name { font-size:18px; font-weight:700; color:var(--text); letter-spacing:-0.4px; margin-bottom:10px; }
+    .regulation-desc { font-size:14px; color:var(--text-secondary); line-height:1.75; margin-bottom:14px; }
+    .regulation-applies { font-size:13px; color:var(--text-secondary); font-family:var(--font-mono); }
+    .regulation-applies strong { color:var(--text); }
+    .baa-box { background:var(--accent-blue-bg); border:1px solid #1e3a5f; border-radius:12px; padding:32px; margin:24px 0; }
+    .baa-box-title { font-size:17px; font-weight:700; color:var(--text); margin-bottom:12px; }
+    .baa-box p { font-size:14px; color:var(--text-secondary); line-height:1.75; margin-bottom:0; }
+    dl { display:flex; flex-direction:column; gap:16px; margin-bottom:16px; }
+    .def-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px 28px; }
+    dt { font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
+    dd { font-size:14px; color:var(--text-secondary); line-height:1.8; margin:0; }
+    @media (max-width:900px) { .compliance-cols { grid-template-columns:1fr; } .compliance-nav { position:static; margin-bottom:40px; } }
+  </style>
+
+  <section class="page-hero" aria-labelledby="compliance-heading">
+    <div class="container">
+      <div class="page-hero-layout">
+        <div class="page-hero-text">
+          <p class="section-label">Compliance</p>
+          <h1 class="page-title" id="compliance-heading">Documentation that stands up to a compliance audit</h1>
+          <p class="page-desc">We work with clients across health care, legal services, financial services, and education. Signed agreements, access logs, retention schedules, and monthly reports that comply with HIPAA, FERPA, and general data governance requirements.</p>
+        </div>
+        <div class="page-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg" class="hero-page-svg">
+            <defs><radialGradient id="doc-bg" cx="40%" cy="40%" r="60%"><stop offset="0%" stop-color="#4f9cf9" stop-opacity="0.1"/><stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/></radialGradient></defs>
+            <ellipse cx="200" cy="200" rx="160" ry="160" fill="url(#doc-bg)"/>
+            <rect x="76" y="56" width="240" height="300" rx="10" fill="#0b1829" stroke="#4f9cf9" stroke-width="1.2"/>
+            <rect x="76" y="56" width="240" height="46" rx="10" fill="#0e2040"/>
+            <rect x="76" y="88" width="240" height="14" rx="0" fill="#0e2040"/>
+            <text x="196" y="87" font-size="10" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600" opacity="0.9">DATA CUSTODY AGREEMENT</text>
+            <rect x="100" y="122" width="138" height="6" rx="3" fill="#4f9cf9" class="dl1"/>
+            <rect x="100" y="136" width="188" height="6" rx="3" fill="#4f9cf9" class="dl2"/>
+            <rect x="100" y="150" width="162" height="6" rx="3" fill="#4f9cf9" class="dl3"/>
+            <rect x="100" y="164" width="104" height="6" rx="3" fill="#4f9cf9" class="dl4"/>
+            <rect x="100" y="196" width="10" height="10" rx="2" fill="none" stroke="#4f9cf9" stroke-width="1.2"/>
+            <path d="M102 201 L104 204 L109 198" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="ck1"/>
+            <rect x="118" y="198" width="90" height="5" rx="2.5" fill="#4f9cf9" opacity="0.28"/>
+            <rect x="100" y="218" width="10" height="10" rx="2" fill="none" stroke="#4f9cf9" stroke-width="1.2"/>
+            <path d="M102 223 L104 226 L109 220" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="ck2"/>
+            <rect x="118" y="220" width="118" height="5" rx="2.5" fill="#4f9cf9" opacity="0.28"/>
+            <rect x="100" y="240" width="10" height="10" rx="2" fill="none" stroke="#4f9cf9" stroke-width="1.2"/>
+            <path d="M102 245 L104 248 L109 242" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="ck3"/>
+            <rect x="118" y="242" width="78" height="5" rx="2.5" fill="#4f9cf9" opacity="0.28"/>
+            <line x1="100" y1="316" x2="216" y2="316" stroke="#4f9cf9" stroke-width="0.8" opacity="0.35"/>
+            <path d="M104 314 Q114 306 122 314 Q130 322 140 310 Q148 300 158 314" fill="none" stroke="#4f9cf9" stroke-width="1.4" stroke-linecap="round" class="sig"/>
+            <text x="100" y="330" font-size="8" font-family="monospace" fill="#4f9cf9" opacity="0.45">AUTHORIZED SIGNATURE</text>
+            <g class="sglow">
+              <circle cx="310" cy="115" r="38" fill="#08111f" stroke="#4f9cf9" stroke-width="1.4"/>
+              <g class="dspin"><circle cx="310" cy="115" r="31" fill="none" stroke="#4f9cf9" stroke-width="0.8" stroke-dasharray="4 5" opacity="0.45"/></g>
+              <circle cx="310" cy="115" r="20" fill="none" stroke="#4f9cf9" stroke-width="1" opacity="0.35"/>
+              <text x="310" y="110" font-size="8" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="700">HIPAA</text>
+              <text x="310" y="122" font-size="7" font-family="monospace" fill="#4f9cf9" text-anchor="middle" opacity="0.8">COMPLIANT</text>
+            </g>
+            <rect x="116" y="372" width="200" height="22" rx="11" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+            <text x="216" y="387" font-size="10" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600">SIGNED BEFORE PROVISIONING</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="compliance-body">
+    <div class="container">
+      <div class="compliance-cols">
+        <nav class="compliance-nav" aria-label="Compliance page sections">
+          <p class="compliance-nav-label">On this page</p>
+          <ul>
+            <li><a href="#hipaa">HIPAA</a></li>
+            <li><a href="#baa">Business Associate Agreement</a></li>
+            <li><a href="#ferpa">FERPA</a></li>
+            <li><a href="#data-governance">General Data Governance</a></li>
+            <li><a href="#key-terms">Key Terms Defined</a></li>
+            <li><a href="#get-started">Getting Started</a></li>
+          </ul>
+        </nav>
+
+        <div class="compliance-content">
+          <div class="compliance-section" id="hipaa">
+            <div class="regulation-card">
+              <div class="regulation-tag">Federal Law</div>
+              <div class="regulation-name">HIPAA</div>
+              <p class="regulation-desc">The Health Insurance Portability and Accountability Act establishes national standards for the protection of Protected Health Information (PHI). The HIPAA Security Rule (45 CFR Part 164) specifies administrative, physical, and technical safeguards that covered entities and business associates must implement for electronic PHI.</p>
+              <p class="regulation-applies"><strong>Who this applies to:</strong> Healthcare providers, health plans, healthcare clearinghouses, and their business associates who create, receive, maintain, or transmit PHI in electronic form.</p>
+            </div>
+            <p>Stoneline Data supports HIPAA-compliant data custody through the following documented controls:</p>
+            <ul>
+              <li>AES-256 encryption at rest using AWS KMS customer-managed keys</li>
+              <li>TLS 1.2 or higher enforced for all data transmission</li>
+              <li>Dedicated IAM user per client with minimum necessary access permissions</li>
+              <li>MFA required on all privileged accounts</li>
+              <li>S3 access logging with 90-day retention in isolated log bucket</li>
+              <li>CloudWatch anomaly alerting for unusual access patterns</li>
+              <li>Documented workforce access controls and training</li>
+              <li>Incident response and breach notification procedures per 45 CFR 164.400</li>
+              <li>Data retention enforcement not less than 6 years from creation or last use</li>
+            </ul>
+            <div class="baa-box">
+              <div class="baa-box-title">HIPAA-tier clients receive a signed Business Associate Agreement before any data is provisioned.</div>
+              <p>We will not accept, store, or process PHI without a BAA in place. This is both a legal requirement and a commitment to your organization's compliance posture.</p>
+            </div>
+          </div>
+
+          <div class="compliance-section" id="baa">
+            <h2>Business Associate Agreement</h2>
+            <p>A Business Associate Agreement (BAA) is a written contract between a covered entity (such as a medical practice) and a business associate (such as Stoneline Data) that describes the permitted uses and disclosures of PHI, the obligations and activities of the business associate, and the safeguards the business associate will implement.</p>
+            <p>Under HIPAA, a covered entity may only share PHI with a business associate if a valid BAA is in place before any PHI is exchanged. Failure to execute a BAA before sharing PHI exposes the covered entity to significant regulatory liability.</p>
+            <p>Our BAA covers the following:</p>
+            <ul>
+              <li>Specific permitted uses of PHI by Stoneline Data (storage, backup, integrity verification, and reporting only)</li>
+              <li>Prohibition on use or disclosure of PHI for any purpose beyond the stated service scope</li>
+              <li>Safeguards Stoneline Data implements to protect PHI</li>
+              <li>Reporting obligations in the event of a breach or security incident</li>
+              <li>Return and destruction procedures upon termination of the agreement</li>
+              <li>Sub-business associate obligations (AWS and GCP both maintain signed BAAs available on request)</li>
+            </ul>
+          </div>
+
+          <div class="compliance-section" id="ferpa">
+            <div class="regulation-card">
+              <div class="regulation-tag">Federal Law</div>
+              <div class="regulation-name">FERPA</div>
+              <p class="regulation-desc">The Family Educational Rights and Privacy Act protects the privacy of student education records at institutions that receive federal funding. Records may only be disclosed without consent in specific circumstances defined by 20 U.S.C. 1232g and 34 CFR Part 99.</p>
+              <p class="regulation-applies"><strong>Who this applies to:</strong> Schools, colleges, universities, and educational agencies that receive federal funding and maintain student records.</p>
+            </div>
+            <p>For educational institutions using Stoneline Data to archive student records or administrative data, we implement:</p>
+            <ul>
+              <li>Encryption at rest and in transit for all stored records</li>
+              <li>Access controls limiting data access to authorized personnel only</li>
+              <li>Documented retention and deletion policies aligned to your institution's schedule</li>
+              <li>Audit logging of all access events</li>
+              <li>Contractual data use restrictions prohibiting use of student data for any purpose beyond storage and backup</li>
+            </ul>
+          </div>
+
+          <div class="compliance-section" id="data-governance">
+            <h2>General Data Governance</h2>
+            <p>Outside of specific regulatory frameworks, many organizations need to demonstrate documented data governance to satisfy internal audit requirements, insurance carriers, or client contracts. Stoneline Data supports these needs through:</p>
+            <ul>
+              <li><strong>Signed custody agreement</strong> defining scope, encryption standard, retention terms, and liability boundaries before services begin</li>
+              <li><strong>Monthly written verification reports</strong> that serve as attestation of backup status and integrity</li>
+              <li><strong>Documented offboarding process</strong> with written confirmation of data delivery and deletion</li>
+              <li><strong>Defined data processing sub-processors</strong> (AWS and GCP) with links to their compliance documentation</li>
+              <li><strong>Incident response procedures</strong> with defined notification timelines</li>
+            </ul>
+            <p>If your organization requires a specific security questionnaire, vendor assessment, or evidence of controls, contact us and we will provide documentation accordingly.</p>
+          </div>
+
+          <div class="compliance-section" id="key-terms">
+            <h2>Key Compliance Terms Defined</h2>
+            <dl>
+              <div class="def-card"><dt>PHI</dt><dd>Protected Health Information. Any individually identifiable health information that relates to the past, present, or future physical or mental health of an individual or the provision of or payment for their care. This includes names, dates, geographic data, phone numbers, Social Security numbers, medical record numbers, and any other information that could identify a patient.</dd></div>
+              <div class="def-card"><dt>Audit Trail</dt><dd>A chronological record of all actions taken in connection with data: who accessed it, when, from where, and what they did. An immutable audit trail cannot be modified or deleted, making it suitable for regulatory review. Stoneline Data generates audit trails from S3 access logs and GCP audit logging, both written to isolated storage that is separate from your primary data.</dd></div>
+              <div class="def-card"><dt>Retention Policy</dt><dd>A documented schedule specifying how long data must be retained before it may be destroyed. Retention requirements vary by regulation and data type: HIPAA requires medical records to be retained for at least 6 years from creation or from the last date of service. Stoneline Data enforces retention policies at the bucket level, preventing deletion of objects before the retention period has elapsed.</dd></div>
+              <div class="def-card"><dt>Business Associate</dt><dd>Any organization or individual that performs functions or activities involving the use or disclosure of PHI on behalf of a HIPAA covered entity. Cloud storage providers and data custodians are business associates when handling PHI. Stoneline Data operates as a business associate and documents that role formally in a signed BAA.</dd></div>
+              <div class="def-card"><dt>Encryption at Rest vs. In Transit</dt><dd>Encryption at rest protects data stored on disk or in a storage system from unauthorized access if the storage medium is physically accessed. Encryption in transit protects data moving across a network from interception. Regulatory standards such as HIPAA require both. Stoneline Data implements AES-256 encryption at rest on all storage buckets and enforces TLS for all data transmission.</dd></div>
+              <div class="def-card"><dt>Minimum Necessary</dt><dd>A HIPAA principle requiring that access to PHI be limited to the information needed to perform a specific function. Stoneline Data implements this by scoping each IAM user's permissions to their specific bucket only, with no permissions granted to other client buckets, administrative resources, or cross-account data.</dd></div>
+            </dl>
+          </div>
+
+          <div class="compliance-section" id="get-started">
+            <h2>Getting Started with a Regulated Plan</h2>
+            <p>Contact us with a brief description of your regulatory environment, data type, and volume. We will confirm which controls apply, send you a draft custody agreement and BAA if applicable, and provision your account only after all documentation is signed by both parties.</p>
+            <p>Quotes for compliance-tier plans are typically returned within one business day.</p>
+            <div style="margin-top:24px;">
+              <a href="/contact" class="btn-hero-primary">Request a compliance quote &#8594;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

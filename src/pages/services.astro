@@ -1,0 +1,309 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Services &amp; Plans — Stoneline Data" description="Managed data custody plans for regulated industries, personal data protection, and high-volume creative backup. AES-256 encrypted, 3-2-1 redundant, fully documented." currentPage="services">
+  <style>
+    .page-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); overflow: hidden; position: relative; }
+    .page-hero-layout { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:48px; }
+    .page-hero .page-title { font-size:clamp(36px,5vw,60px); font-weight:700; letter-spacing:-2px; line-height:1.05; color:var(--text); margin-bottom:20px; }
+    .page-hero .page-desc { font-size:18px; color:var(--text-secondary); max-width:520px; line-height:1.7; }
+    .page-hero-visual { display:flex; align-items:center; justify-content:center; }
+    .hero-page-svg { width:100%; max-width:420px; height:auto; }
+    @keyframes tier-glow { 0%,100%{opacity:.15} 50%{opacity:.35} }
+    @keyframes tier-node { 0%,100%{opacity:.5;r:4} 50%{opacity:1;r:5.5} }
+    @keyframes tier-packet { 0%{opacity:0;transform:translateY(0)} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0;transform:translateY(-80px)} }
+    .ta { animation:tier-glow 3.5s ease-in-out infinite; }
+    .tb { animation:tier-glow 3.5s 1.2s ease-in-out infinite; }
+    .tc { animation:tier-glow 3.5s 2.4s ease-in-out infinite; }
+    .tn1 { animation:tier-node 2.2s ease-in-out infinite; }
+    .tn2 { animation:tier-node 2.2s .7s ease-in-out infinite; }
+    .tn3 { animation:tier-node 2.2s 1.4s ease-in-out infinite; }
+    .tp1 { animation:tier-packet 3s .5s ease-in-out infinite; }
+    .tp2 { animation:tier-packet 3s 1.5s ease-in-out infinite; }
+    .tp3 { animation:tier-packet 3s 2.5s ease-in-out infinite; }
+    @media(prefers-reduced-motion:reduce){.ta,.tb,.tc,.tn1,.tn2,.tn3,.tp1,.tp2,.tp3{animation:none}}
+    @media(max-width:768px){.page-hero-layout{grid-template-columns:1fr}.page-hero-visual{display:none}}
+    .audience-section { padding:72px 0; }
+    .audience-intro { margin-bottom:52px; }
+    .audience-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:72px; }
+    .audience-card { background:var(--surface); padding:36px 32px; transition:background 0.15s; }
+    .audience-card:hover { background:var(--surface-2); }
+    .audience-eyebrow { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent-blue); margin-bottom:12px; }
+    .audience-name { font-size:20px; font-weight:700; color:var(--text); letter-spacing:-0.5px; margin-bottom:14px; }
+    .audience-desc { font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:20px; }
+    .audience-features { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .audience-features li { font-size:13px; color:var(--text-secondary); display:flex; align-items:baseline; gap:8px; }
+    .audience-features li::before { content:''; display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--accent-blue); flex-shrink:0; margin-top:5px; }
+    .pricing-section { padding:0 0 88px; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+    .pricing-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:32px; display:flex; flex-direction:column; transition:border-color 0.2s,background 0.15s; }
+    .pricing-card:hover { border-color:var(--border-light); background:var(--surface-2); }
+    .pricing-card.featured { border-color:var(--accent-blue); background:var(--accent-blue-bg); }
+    .pricing-card.featured:hover { border-color:#6aabfc; }
+    .featured-badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; font-family:var(--font-mono); letter-spacing:1px; text-transform:uppercase; color:var(--accent-blue); background:#0d1e38; border:1px solid #1e3a5f; border-radius:100px; padding:4px 10px; margin-bottom:20px; width:fit-content; }
+    .plan-name { font-size:18px; font-weight:700; color:var(--text); letter-spacing:-0.4px; margin-bottom:6px; }
+    .plan-tagline { font-size:13px; color:var(--text-secondary); margin-bottom:24px; line-height:1.6; }
+    .plan-price { font-family:var(--font-mono); margin-bottom:28px; }
+    .plan-price .amount { font-size:32px; font-weight:600; color:var(--text); letter-spacing:-1px; }
+    .plan-price .period { font-size:14px; color:var(--text-secondary); margin-left:2px; }
+    .plan-features { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:32px; flex:1; }
+    .plan-features li { font-size:14px; color:var(--text-secondary); display:flex; align-items:flex-start; gap:10px; }
+    .plan-features li svg { width:16px; height:16px; flex-shrink:0; margin-top:2px; stroke:var(--accent-blue); }
+    .plan-cta { display:block; text-align:center; padding:11px 20px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; border:1px solid var(--border-light); color:var(--text); background:var(--surface-2); transition:background 0.15s,border-color 0.15s; }
+    .plan-cta:hover { background:#303030; border-color:#505050; }
+    .featured .plan-cta { background:var(--accent-blue); border-color:var(--accent-blue); color:#000; }
+    .featured .plan-cta:hover { background:#6aabfc; border-color:#6aabfc; }
+    .compare-section { padding:0 0 88px; }
+    .compare-table { width:100%; border-collapse:collapse; border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-top:40px; }
+    .compare-table th, .compare-table td { padding:16px 20px; border-bottom:1px solid var(--border); text-align:left; font-size:14px; }
+    .compare-table th { background:var(--surface); font-weight:600; color:var(--text); }
+    .compare-table td { color:var(--text-secondary); background:var(--bg); }
+    .compare-table tr:last-child td, .compare-table tr:last-child th { border-bottom:none; }
+    .check { color:var(--green); font-size:16px; }
+    .dash { color:var(--border-light); }
+    .faq-section { padding:0 0 100px; }
+    .faq-list { margin-top:40px; display:flex; flex-direction:column; gap:2px; }
+    .faq-item { border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface); }
+    .faq-item + .faq-item { border-top:none; border-radius:0; }
+    .faq-item:first-child { border-radius:10px 10px 0 0; }
+    .faq-item:last-child { border-radius:0 0 10px 10px; border-top:none; }
+    details summary { padding:20px 24px; font-size:15px; font-weight:600; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    details summary::-webkit-details-marker { display:none; }
+    details summary::after { content:'+'; font-size:20px; font-weight:400; color:var(--text-secondary); flex-shrink:0; }
+    details[open] summary::after { content:'−'; }
+    details .faq-body { padding:0 24px 20px; font-size:14px; color:var(--text-secondary); line-height:1.75; }
+    @media (max-width:960px) { .audience-grid { grid-template-columns:1fr; } .pricing-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:640px) { .pricing-grid { grid-template-columns:1fr; } .compare-table { font-size:13px; } .compare-table th, .compare-table td { padding:12px 14px; } }
+  </style>
+
+  <section class="page-hero" aria-labelledby="services-page-heading">
+    <div class="container">
+      <div class="page-hero-layout">
+        <div class="page-hero-text">
+          <p class="section-label">Services</p>
+          <h1 class="page-title" id="services-page-heading">Plans built around how<br>your data actually lives</h1>
+          <p class="page-desc">Every Stoneline plan includes AES-256 encryption, three independent copies of your data across two cloud providers, and a plain-language monthly confirmation that your backup is intact.</p>
+        </div>
+        <div class="page-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg" class="hero-page-svg">
+            <defs><radialGradient id="sg-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4f9cf9" stop-opacity="0.12"/><stop offset="100%" stop-color="#4f9cf9" stop-opacity="0"/></radialGradient></defs>
+            <ellipse cx="220" cy="200" rx="180" ry="160" fill="url(#sg-glow)"/>
+            <g transform="translate(0,60)">
+              <rect x="100" y="0" width="240" height="54" rx="8" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1" class="ta"/>
+              <text x="124" y="22" font-size="10" font-family="monospace" fill="#4f9cf9" opacity="0.5">TIER 3</text>
+              <text x="124" y="38" font-size="12" font-family="sans-serif" fill="#e0e0e0" font-weight="600">HIPAA &amp; Compliance</text>
+              <circle cx="298" cy="27" r="4" fill="#4f9cf9" class="tn1"/>
+              <circle cx="314" cy="27" r="4" fill="#4f9cf9" class="tn2"/>
+              <circle cx="330" cy="27" r="4" fill="#4ade80" class="tn3"/>
+              <rect x="306" y="38" width="10" height="8" rx="1.5" fill="#4f9cf9" opacity="0.7"/>
+              <path d="M308 38 L308 35 Q311 32 314 35 L314 38" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.7"/>
+            </g>
+            <line x1="180" y1="114" x2="180" y2="150" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+            <line x1="260" y1="114" x2="260" y2="150" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+            <g transform="translate(0,158)">
+              <rect x="80" y="0" width="280" height="54" rx="8" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1.4" class="tb"/>
+              <text x="104" y="22" font-size="10" font-family="monospace" fill="#4f9cf9" opacity="0.5">TIER 2</text>
+              <text x="104" y="38" font-size="12" font-family="sans-serif" fill="#e0e0e0" font-weight="600">Small Business</text>
+              <circle cx="294" cy="20" r="4" fill="#4f9cf9" class="tn2"/>
+              <circle cx="310" cy="20" r="4" fill="#4f9cf9" class="tn1"/>
+              <circle cx="326" cy="20" r="4" fill="#4f9cf9" class="tn3"/>
+              <circle cx="342" cy="20" r="4" fill="#4ade80" class="tn2"/>
+              <rect x="302" y="33" width="10" height="8" rx="1.5" fill="#4f9cf9" opacity="0.7"/>
+              <path d="M304 33 L304 30 Q307 27 310 30 L310 33" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.7"/>
+            </g>
+            <line x1="180" y1="212" x2="180" y2="248" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+            <line x1="260" y1="212" x2="260" y2="248" stroke="#4f9cf9" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 4"/>
+            <g transform="translate(0,256)">
+              <rect x="60" y="0" width="320" height="54" rx="8" fill="#0e1f38" stroke="#4f9cf9" stroke-width="1" class="tc"/>
+              <text x="84" y="22" font-size="10" font-family="monospace" fill="#4f9cf9" opacity="0.5">TIER 1</text>
+              <text x="84" y="38" font-size="12" font-family="sans-serif" fill="#e0e0e0" font-weight="600">Personal Archive</text>
+              <circle cx="298" cy="20" r="4" fill="#4f9cf9" class="tn3"/>
+              <circle cx="314" cy="20" r="4" fill="#4f9cf9" class="tn1"/>
+              <rect x="306" y="33" width="10" height="8" rx="1.5" fill="#4f9cf9" opacity="0.5"/>
+              <path d="M308 33 L308 30 Q311 27 314 30 L314 33" fill="none" stroke="#4f9cf9" stroke-width="1.4" opacity="0.5"/>
+            </g>
+            <circle cx="180" cy="310" r="3" fill="#4f9cf9" class="tp1"/>
+            <circle cx="260" cy="310" r="3" fill="#4ade80" class="tp2"/>
+            <circle cx="220" cy="310" r="3" fill="#4f9cf9" class="tp3"/>
+            <rect x="154" y="348" width="132" height="26" rx="13" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+            <text x="220" y="365" font-size="11" font-family="monospace" fill="#4f9cf9" text-anchor="middle" font-weight="600">AES-256 ENCRYPTED</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="audience-section" aria-labelledby="audience-heading">
+    <div class="container">
+      <div class="audience-intro">
+        <p class="section-label">Who We Serve</p>
+        <h2 class="section-title" id="audience-heading">Three kinds of data. One standard of care.</h2>
+        <p class="section-desc">Whether your data carries a regulatory obligation, personal significance, or professional value, we apply the same documented custody process to every byte.</p>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <p class="audience-eyebrow">Regulatory &amp; Compliance</p>
+          <div class="audience-name">Governed Data Transfer</div>
+          <p class="audience-desc">Medical offices, law firms, financial services, and businesses that must demonstrate documented accountability for how data is stored, accessed, and retained.</p>
+          <ul class="audience-features" aria-label="Regulatory features">
+            <li>Signed Business Associate Agreement available</li>
+            <li>HIPAA-aligned security controls</li>
+            <li>Documented retention policies with enforcement</li>
+            <li>Full access audit trail</li>
+            <li>Monthly written verification reports</li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <p class="audience-eyebrow">Personal Data Lockbox</p>
+          <div class="audience-name">Private, Verified Storage</div>
+          <p class="audience-desc">Individuals who want a named, accountable custodian for their most important files. Estate documents, family media, financial records, and anything that simply cannot be lost.</p>
+          <ul class="audience-features" aria-label="Personal lockbox features">
+            <li>1TB encrypted storage across two locations</li>
+            <li>Monthly integrity confirmation</li>
+            <li>Signed custody agreement on file</li>
+            <li>You control access and retention terms</li>
+            <li>Affordable entry starting point</li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <p class="audience-eyebrow">Creators &amp; Creatives</p>
+          <div class="audience-name">Massive Backup at Scale</div>
+          <p class="audience-desc">Photographers, videographers, musicians, and digital artists who generate large volumes of original work and need an off-site archive they can actually trust.</p>
+          <ul class="audience-features" aria-label="Creator features">
+            <li>Scalable storage from 1TB to 10TB and beyond</li>
+            <li>Cold archival tier for completed projects</li>
+            <li>Version retention so nothing is overwritten silently</li>
+            <li>Nightly automated sync</li>
+            <li>Documented chain of custody for licensing purposes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pricing-section" id="plans">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Transparent pricing across every tier</h2>
+        <p class="section-desc">All plans include onboarding, encryption setup, automated sync, and your first monthly report. One-time setup fees apply.</p>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="plan-name">Personal Archive</div>
+            <p class="plan-tagline">1TB encrypted backup with monthly integrity verification. Ideal for personal document vaults and family media.</p>
+            <div class="plan-price"><span class="amount">$5</span><span class="period"> to $10/mo</span></div>
+            <ul class="plan-features" aria-label="Personal Archive features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1TB across AWS primary and GCP secondary</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>AES-256 encryption at rest and in transit</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Nightly automated sync</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Monthly integrity confirmation report</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Signed custody agreement</li>
+            </ul>
+            <a href="/contact" class="plan-cta">Get a quote</a>
+          </div>
+          <div class="pricing-card featured">
+            <div class="featured-badge">&#x2605; Most Popular</div>
+            <div class="plan-name">Small Business</div>
+            <p class="plan-tagline">Managed backup up to 5TB with access logging, reports, and operator accountability. Covers most small business data needs.</p>
+            <div class="plan-price"><span class="amount">$50</span><span class="period"> to $100/mo</span></div>
+            <ul class="plan-features" aria-label="Small Business features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Up to 5TB across dual-cloud providers</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Access logging on all storage buckets</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Monthly verification report with error resolution</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Named operator point of contact</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>MFA enforced on all access</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>CloudWatch anomaly alerts</li>
+            </ul>
+            <a href="/contact" class="plan-cta">Get a quote</a>
+          </div>
+          <div class="pricing-card">
+            <div class="plan-name">Legal &amp; Professional</div>
+            <p class="plan-tagline">Encrypted records custody with retention policy enforcement, full audit trail, and formal documentation for regulated data transfer requirements.</p>
+            <div class="plan-price"><span class="amount">$75</span><span class="period"> to $150/mo</span></div>
+            <ul class="plan-features" aria-label="Legal and Professional features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Up to 10TB across dual-cloud providers</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Retention policy enforcement with documented schedule</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Full immutable access audit trail</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Formal custody agreement with defined scope</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Monthly signed verification report</li>
+            </ul>
+            <a href="/contact" class="plan-cta">Get a quote</a>
+          </div>
+          <div class="pricing-card">
+            <div class="plan-name">HIPAA-Compliant</div>
+            <p class="plan-tagline">Signed BAA, documented security controls, KMS encryption, and strict access management. For medical offices and healthcare-adjacent organizations.</p>
+            <div class="plan-price"><span class="amount">$150</span><span class="period"> to $300/mo</span></div>
+            <ul class="plan-features" aria-label="HIPAA Compliant features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Signed Business Associate Agreement</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>AWS KMS customer-managed encryption keys</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Documented minimum necessary access controls</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Breach notification procedures per HIPAA §164.400</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Dedicated audit log with retention per requirements</li>
+            </ul>
+            <a href="/contact" class="plan-cta">Get a quote</a>
+          </div>
+          <div class="pricing-card">
+            <div class="plan-name">Cold Archive</div>
+            <p class="plan-tagline">Long-term archival for data you need preserved indefinitely. Glacier-tiered after 30 days, verified regularly, economical at scale.</p>
+            <div class="plan-price"><span class="amount">$2</span><span class="period"> to $4/TB/mo</span></div>
+            <ul class="plan-features" aria-label="Cold Archive features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>AWS S3 Glacier tiering after 30 days</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>GCP Nearline secondary copy</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Quarterly integrity checks</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Ideal for completed creative project archives</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Add-on to any active plan or standalone</li>
+            </ul>
+            <a href="/contact" class="plan-cta">Get a quote</a>
+          </div>
+          <div class="pricing-card">
+            <div class="plan-name">Setup &amp; Onboarding</div>
+            <p class="plan-tagline">Full account configuration: IAM provisioning, bucket creation, encryption, sync automation, and documentation. One-time fee.</p>
+            <div class="plan-price"><span class="amount">$50</span><span class="period"> to $150 one-time</span></div>
+            <ul class="plan-features" aria-label="Setup and Onboarding features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>AWS IAM user and bucket provisioning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>GCP project and service account setup</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Encryption configuration and key management</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Automated sync schedule with monitoring</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Signed custody agreement on file</li>
+            </ul>
+            <a href="/contact" class="plan-cta">Get a quote</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-section" aria-labelledby="compare-heading">
+        <p class="section-label">Feature Comparison</p>
+        <h2 class="section-title" id="compare-heading">What each plan includes</h2>
+        <div role="region" aria-label="Plan comparison table" tabindex="0" style="overflow-x:auto;">
+          <table class="compare-table">
+            <thead><tr><th scope="col">Feature</th><th scope="col">Personal</th><th scope="col">Small Biz</th><th scope="col">Legal / Pro</th><th scope="col">HIPAA</th></tr></thead>
+            <tbody>
+              <tr><td>AES-256 Encryption</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Dual-cloud redundancy (AWS + GCP)</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>3-2-1 backup architecture</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Monthly verification report</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Signed custody agreement</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>MFA enforcement</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Access logging</td><td class="dash">&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Retention policy enforcement</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Full immutable audit trail</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>KMS customer-managed keys</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Signed BAA (Business Associate Agreement)</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+              <tr><td>HIPAA breach notification procedures</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" aria-labelledby="faq-heading">
+    <div class="container">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title" id="faq-heading">Common questions</h2>
+      <div class="faq-list">
+        <div class="faq-item"><details><summary>What is the onboarding process?</summary><div class="faq-body">After you request a quote, we confirm your storage volume and compliance needs, then provision dedicated cloud storage accounts in your name. You receive a signed custody agreement before any data migration begins. Onboarding typically takes two to five business days depending on plan tier.</div></details></div>
+        <div class="faq-item"><details><summary>Can I upgrade my plan later?</summary><div class="faq-body">Yes. Storage tiers and feature levels can be adjusted as your needs grow. We will provision additional capacity or add compliance features and update your custody agreement accordingly. Upgrades are prorated monthly.</div></details></div>
+        <div class="faq-item"><details><summary>What happens to my data if I cancel?</summary><div class="faq-body">We export your data to a format you can access directly, deliver it via secure S3 presigned URL or a physical drive at your request, and provide written confirmation of delivery. Your buckets and all access credentials are then deleted after a 30-day hold period.</div></details></div>
+        <div class="faq-item"><details><summary>How are creators and photographers billed differently?</summary><div class="faq-body">Creators with large archives often use a hybrid of an active plan for current work and cold archive pricing for completed projects. This keeps monthly costs manageable as your library grows. We size the tiers together during onboarding.</div></details></div>
+        <div class="faq-item"><details><summary>Do you provide a BAA for HIPAA clients automatically?</summary><div class="faq-body">Yes. Any client whose data includes Protected Health Information receives a signed Business Associate Agreement before the account is provisioned. You will not be asked to store PHI without a BAA in place.</div></details></div>
+      </div>
+    </div>
+  </section>
+</Layout>
