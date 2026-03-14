@@ -110,6 +110,22 @@
       color: #4f9cf9; text-transform: uppercase;
       line-height: 1; opacity: 0.9;
     }
+    @media (max-width: 640px) {
+      .nav-logo-mark { width: 20px; height: 26px; }
+      .nav-logo-name { font-size: 15px; }
+      .nav-logo-sub { display: none; }
+      .nav-logo-wordmark { gap: 0; }
+      .nav-actions { display: none; }
+      .nav-sep { display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 900px) and (min-width: 641px) {
+      .nav-logo-name { font-size: 17px; }
+      .nav-logo-sub { font-size: 11px; letter-spacing: 2px; }
+      .nav-logo-mark { width: 24px; height: 31px; }
+      .nav-links a { padding: 6px 9px; font-size: 13px; }
+      .nav-sep { margin: 0 12px; }
+    }
     /* ─────────────────────────────────────────── */
 
 
